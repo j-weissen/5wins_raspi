@@ -9,13 +9,14 @@ enum symbol{x,o,free};
 
 class Cell {
 public:
-    Cell(int x, int y, symbol state) : x(x), y(y), state(state) {}
-private:
-    int x, y;
+    Cell(int x, int y, symbol state) : x(x), y(y), state(state){}
     symbol state;
+    int x, y;
     void clear();
     void set();
     void checkWin();
+private:
+
 };
 
 

@@ -11,7 +11,6 @@ class Game {
     void switchTurn();
 private:
     void turn();
-    int accessArr2D(int x, int y);
 };
 
 
