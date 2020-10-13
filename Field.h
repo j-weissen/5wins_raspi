@@ -11,6 +11,7 @@
 class Field {
     static const int maxX = 15;
     static const int maxY = 15;
+
 public:
     Cell area[maxX * maxY];
     Field();

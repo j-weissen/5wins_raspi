@@ -8,15 +8,13 @@
 #include "Field.h"
 
 class Game {
-    symbol currPlayer;
 public:
     explicit Game(symbol currPlayer);
+    symbol currPlayer;
 
 private:
     void switchTurn();
-private:
     void turn();
 };
-
 
 #endif //INC_5WINS_RASPI_GAME_H

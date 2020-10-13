@@ -13,10 +13,6 @@ public:
     symbol state;
     void clear();
     void set(int x, int y);
-
-private:
-
 };
-
 
 #endif //INC_5WINS_RASPI_CELL_H

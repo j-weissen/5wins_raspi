@@ -4,10 +4,6 @@
 
 #include "Cell.h"
 
-void clear(){}
-void set(){}
-void checkWin(){}
-
 void Cell::clear() {
 
 }

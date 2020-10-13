@@ -4,7 +4,6 @@
 
 #include "Field.h"
 
-
 Field::Field() {
     for (int x = 0; x < maxX; ++x) {
         for (int y = 0; y < maxY; ++y) {
@@ -44,5 +43,3 @@ void Field::print() {
 void Field::checkWin() {
 
 }
-
-
