@@ -41,4 +41,8 @@ void Field::print() {
     }
 }
 
+void Field::checkWin() {
+
+}
+
 

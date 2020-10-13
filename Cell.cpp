@@ -15,8 +15,3 @@ void Cell::clear() {
 void Cell::set() {
 
 }
-
-void Cell::checkWin() {
-
-}
-

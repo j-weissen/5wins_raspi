@@ -19,6 +19,7 @@ private:
     void clearAll();
     int accessArr2D(int x, int y);
     void print();
+    void checkWin();
 };
 
 
