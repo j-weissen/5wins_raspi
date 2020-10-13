@@ -3,13 +3,22 @@
 //
 
 #include "Game.h"
+#include <iostream>
 
 
 Game::Game(symbol currPlayer) : currPlayer(currPlayer) {}
 
 
 void Game::turn() {
+    int xIn, yIn;
 
+    // Input
+    std::cout << "Spieler " << currPlayer << ", Row: " << std::endl;
+    std::cin >> yIn;
+    std::cout << "Spieler " << currPlayer << ", Collumn: " << std::endl;
+    std::cin >> xIn;
+
+    field.area[Field::accessArr2D(xIn, yIn)].set(xIn, yIn);
 }
 
 void Game::switchTurn() {
