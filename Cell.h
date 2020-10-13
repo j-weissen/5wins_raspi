@@ -5,7 +5,7 @@
 #ifndef INC_5WINS_RASPI_CELL_H
 #define INC_5WINS_RASPI_CELL_H
 
-enum symbol{x,o,free};
+enum symbol{x,o,f};
 
 class Cell {
 public:
@@ -15,6 +15,7 @@ public:
     void clear();
     void set();
     void checkWin();
+    //checkwin() und x,y in Field?
 private:
 
 };

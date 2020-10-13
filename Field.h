@@ -12,6 +12,10 @@ class Field {
     static const int maxX = 15;
     static const int maxY = 15;
     Cell area[maxX*maxY];
+public:
+    Field();
+
+private:
     void clearAll();
     int accessArr2D(int x, int y);
     void print();
