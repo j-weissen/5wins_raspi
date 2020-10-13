@@ -5,21 +5,16 @@
 #include "Field.h"
 
 
-Field::Field() {
-    for (int x = 0; x < maxX; ++x) {
-        for (int y = 0; y < maxY; ++y) {
-            area[accessArr2D(x,y)].x = x;
-            area[accessArr2D(x,y)].y = y;
-        }
-    }
-}
-
 int Field::accessArr2D(int x, int y) {
     return y * maxX + x;
 }
 
 void Field::clearAll() {
-
+    for (int x = 0; x < maxX; ++x) {
+        for (int y = 0; y < maxY; ++y) {
+            area[accessArr2D(x,y)].state = f;
+        }
+    }
 }
 
 void Field::print() {
@@ -41,7 +36,7 @@ void Field::print() {
     }
 }
 
-void Field::checkWin() {
+void Field::checkWin(int x, int y) {
 
 }
 

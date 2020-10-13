@@ -4,10 +4,19 @@
 
 #include "Game.h"
 
+
+Game::Game(symbol currPlayer) : currPlayer(currPlayer) {}
+
+
 void Game::turn() {
 
 }
 
 void Game::switchTurn() {
-
+    if (currPlayer == x) {
+        currPlayer = o;
+    } else {
+        currPlayer = x;
+    }
 }
+

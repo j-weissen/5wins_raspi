@@ -9,7 +9,7 @@ enum symbol{x,o,f};
 
 class Cell {
 public:
-    Cell(int x, int y, symbol state) : x(x), y(y), state(state){}
+    Cell(symbol state) : state(state){}
     symbol state;
     void clear();
     void set();
