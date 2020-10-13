@@ -12,6 +12,6 @@ void Cell::clear() {
 
 }
 
-void Cell::set() {
+void Cell::set(int x, int y) {
 
 }

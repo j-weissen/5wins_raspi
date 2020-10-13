@@ -11,14 +11,15 @@
 class Field {
     static const int maxX = 15;
     static const int maxY = 15;
-    Cell area[maxX*maxY];
+public:
+    Cell area[maxX * maxY];
+    Field();
+    static int accessArr2D(int x, int y);
 
 private:
     void clearAll();
-    int accessArr2D(int x, int y);
     void print();
-    void checkWin(int x, int y);
+    void checkWin();
 };
-
 
 #endif //INC_5WINS_RASPI_FIELD_H
