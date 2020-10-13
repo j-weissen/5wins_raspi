@@ -12,7 +12,7 @@ public:
     Cell(int x, int y, symbol state) : x(x), y(y), state(state){}
     symbol state;
     void clear();
-    void set();
+    void set(int x, int y);
 
 private:
 
