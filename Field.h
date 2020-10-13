@@ -22,5 +22,4 @@ private:
     void checkWin();
 };
 
-
 #endif //INC_5WINS_RASPI_FIELD_H

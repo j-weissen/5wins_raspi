@@ -5,7 +5,7 @@
 #include "Field.h"
 
 
-Field::Field() {
+Field::Field(){
     for (int x = 0; x < maxX; ++x) {
         for (int y = 0; y < maxY; ++y) {
             area[accessArr2D(x,y)].x = x;
