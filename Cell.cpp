@@ -8,6 +8,15 @@ void Cell::clear() {
     state = f;
 }
 
-void Cell::set(int x, int y) {
+void Cell::display() {
+    char c;
+    if (state == f) {
+        c = ' ';
+    } else if (state == x) {
+        c = 'x';
+    } else {
+        c = 'o';
+    }
 
+    std::cout << "[" << c << "]";
 }

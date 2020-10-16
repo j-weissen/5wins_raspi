@@ -6,72 +6,108 @@
 
 
 int Field::accessArr2D(int x, int y) {
-    return y * maxX + x;
+    return y * maxArea + x;
 }
 
 void Field::clearAll() {
-    for (int x = 0; x < maxX; ++x) {
-        for (int y = 0; y < maxY; ++y) {
+    for (int x = 0; x < maxArea; ++x) {
+        for (int y = 0; y < maxArea; ++y) {
             area[accessArr2D(x, y)].clear();
         }
     }
 }
 
 void Field::print() {
-    char c;
-
-    for (int i = 0; i < maxX; ++i) {
-        for (int j = 0; j < maxY; ++j) {
-            //cell.display()
-            if (area[accessArr2D(i, j)].state == f) {
-                c = ' ';
-            } else if (area[accessArr2D(i, j)].state == x) {
-                c = 'x';
-            } else {
-                c = 'o';
-            }
-
-            std::cout << "[" << c << "]";
+    for (int x = 0; x < maxArea; ++x) {
+        for (int y = 0; y < maxArea; ++y) {
+            area[accessArr2D(x, y)].display();
         }
         std::cout << std::endl;
     }
 }
 
-void Field::checkWin(int x, int y, symbol currPlayer) {
-    int win = 0;
+symbol Field::checkWin(int x, int y, symbol currPlayer) {
+    int winCount = 0;
     int ix = 0;
     int iy = 0;
+    symbol winner = f;
 
     //horizontal
-    ix = (x-4 < 0) ? 0 : x-4;
-    while (ix < ((x+4 > maxX) ? maxX - 1 : x+4) && win < 5) {
+    ix = initI_negative(x);
+    while (inArea(x, ix) && winner == f) {
         if (area[accessArr2D(ix, y)].state == currPlayer) {
-            win++;
+            winCount++;
         } else {
-            win = 0;
+            winCount = 0;
         }
+        if (winCount >= win) {
+            winner = currPlayer;
+        }
+
         ix++;
     }
 
     //vertical
-    iy = (y-4 < 0) ? 0 : x-4;
-    while (iy < ((y+4 > maxY) ? maxY - 1 : y+4) && win < 5) {
+    iy = initI_negative(y);
+    while (inArea(y, iy) && winner == f) {
         if (area[accessArr2D(x, iy)].state == currPlayer) {
-            win++;
+            winCount++;
         } else {
-            win = 0;
+            winCount = 0;
         }
+        if (winCount >= win) {
+            winner = currPlayer;
+        }
+
         iy++;
     }
 
     //left up to right down
-    while (ix < ((x + 4 > maxX) ? maxX - 1 : x + 4) && iy < ((y+4 > maxY) ? maxY - 1 : y+4) && win < 5) {
-        if (area[accessArr2D(ix, y)].state == currPlayer) {
-            win++;
+    ix = initI_negative(x);
+    iy = initI_negative(y);
+    while (inArea(x, ix) && inArea(y, iy) && winner == f) {
+        if (area[accessArr2D(ix, iy)].state == currPlayer) {
+            winCount++;
         } else {
-            win = 0;
+            winCount = 0;
         }
+        if (winCount >= win) {
+            winner = currPlayer;
+        }
+
         ix++;
         iy++;
     }
+
+    //left down to right up
+    ix = initI_negative(x);
+    iy = initI_positive(y);
+    while (inArea(x, ix) && inArea(y, iy) && winCount < win) {
+        if (area[accessArr2D(ix, iy)].state == currPlayer) {
+            winCount++;
+        } else {
+            winCount = 0;
+        }
+        if (winCount >= win) {
+            winner = currPlayer;
+        }
+
+        ix++;
+        iy--;
+    }
+
+    return winner;
+}
+
+
+int Field::initI_negative(int z) {
+    return (z-winDist < 0) ? 0 : z-winDist;
+}
+
+int Field::initI_positive(int z) {
+    return (z+winDist >= maxArea) ? maxArea-1 : z+winDist;
+}
+
+bool Field::inArea(int z, int iz) {
+    return iz < ((z+winDist > maxArea) ? maxArea-1 : z+winDist) && iz > ((z-winDist < 0) ? -1 : z-winDist);
 }

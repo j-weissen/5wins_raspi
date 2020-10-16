@@ -9,17 +9,21 @@
 #include "Cell.h"
 
 class Field {
-    static const int maxX = 15;
-    static const int maxY = 15;
+    static const int maxArea = 15;
 
 public:
-    Cell area[maxX * maxY];
+    Cell area[maxArea * maxArea];
     static int accessArr2D(int x, int y);
 
 private:
+    static const int win = 5;
+    static const int winDist = win-1;
     void clearAll();
     void print();
-    void checkWin(int x, int y, symbol currPlayer);
+    symbol checkWin(int x, int y, symbol currPlayer);
+    int initI_negative(int z);
+    int initI_positive(int z);
+    bool inArea(int z, int iz);
 };
 
 #endif //INC_5WINS_RASPI_FIELD_H

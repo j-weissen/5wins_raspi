@@ -5,6 +5,9 @@
 #ifndef INC_5WINS_RASPI_CELL_H
 #define INC_5WINS_RASPI_CELL_H
 
+#include <iostream>
+
+
 enum symbol{x,o,f};
 
 class Cell {
@@ -12,7 +15,7 @@ public:
     Cell(symbol state) : state(state){}
     symbol state;
     void clear();
-    void set(int x, int y);
+    void display();
 };
 
 #endif //INC_5WINS_RASPI_CELL_H
