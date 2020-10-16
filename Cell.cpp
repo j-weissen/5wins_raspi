@@ -5,7 +5,7 @@
 #include "Cell.h"
 
 void Cell::clear() {
-
+    state = f;
 }
 
 void Cell::set(int x, int y) {

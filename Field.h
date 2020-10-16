@@ -14,13 +14,12 @@ class Field {
 
 public:
     Cell area[maxX * maxY];
-    Field();
     static int accessArr2D(int x, int y);
 
 private:
     void clearAll();
     void print();
-    void checkWin();
+    void checkWin(int x, int y, symbol currPlayer);
 };
 
 #endif //INC_5WINS_RASPI_FIELD_H
