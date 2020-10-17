@@ -12,9 +12,12 @@ enum symbol{x,o,f};
 
 class Cell {
 public:
-    Cell(symbol state) : state(state){}
+    explicit Cell(symbol state);
+
     symbol state;
+
     void clear();
+
     void display();
 };
 

@@ -20,3 +20,5 @@ void Cell::display() {
 
     std::cout << "[" << c << "]";
 }
+
+Cell::Cell(symbol state) : state(state) {}
