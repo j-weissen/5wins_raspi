@@ -9,12 +9,16 @@
 
 class Game {
 public:
-    explicit Game(symbol currPlayer);
     symbol currPlayer;
+    Field field;
+
+    void turn(bool *win);
+
+    explicit Game(symbol currPlayer);
 
 private:
     void switchTurn();
-    void turn();
+
 };
 
 #endif //INC_5WINS_RASPI_GAME_H

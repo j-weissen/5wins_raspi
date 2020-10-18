@@ -9,13 +9,19 @@
 #include "Cell.h"
 
 class Field {
-    static const int maxArea = 15;
+
 
 public:
-    Cell *area[maxArea * maxArea] = {new Cell(f)};
-
+    static const int maxArea = 15;
+    Cell *area[maxArea * maxArea];
 
     static int accessArr2D(int x, int y);
+
+    bool checkWin(int x, int y, symbol currPlayer);
+
+    void print();
+
+    void init_Area();
 
 private:
     static const int win = 5;
@@ -23,14 +29,9 @@ private:
 
     void clearAll();
 
-    void print();
-
-    bool checkWin(int x, int y, symbol currPlayer);
 
     static int initI_negative(int z);
-
     static int initI_positive(int z);
-
     static bool inArea(int z, int iz);
 };
 

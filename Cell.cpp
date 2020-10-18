@@ -18,7 +18,7 @@ void Cell::display() {
         c = 'o';
     }
 
-    std::cout << "[" << c << "]";
+    std::cout << "[ " << c << " ]";
 }
 
 Cell::Cell(symbol state) : state(state) {}

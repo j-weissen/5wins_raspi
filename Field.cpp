@@ -18,8 +18,15 @@ void Field::clearAll() {
 }
 
 void Field::print() {
-    for (int x = 0; x < maxArea; ++x) {
-        for (int y = 0; y < maxArea; ++y) {
+    std::cout << "\t";
+    for (int i = 0; i < maxArea; ++i) {
+        std::cout << ((i < 10) ? "  " + std::to_string(i) + "  " : " " + (std::to_string(i / 10) + " " +
+                                                                          std::to_string(i % 10) + " "));
+    }
+    std::cout << std::endl;
+    for (int y = 0; y < maxArea; ++y) {
+        std::cout << std::to_string(y) + "\t";
+        for (int x = 0; x < maxArea; ++x) {
             area[accessArr2D(x, y)]->display();
         }
         std::cout << std::endl;
@@ -94,4 +101,12 @@ int Field::initI_positive(int z) {
 
 bool Field::inArea(int z, int iz) {
     return iz < ((z + winDist > maxArea) ? maxArea - 1 : z + winDist) && iz > ((z - winDist < 0) ? -1 : z - winDist);
+}
+
+void Field::init_Area() {
+    for (int y = 0; y < maxArea; ++y) {
+        for (int x = 0; x < maxArea; ++x) {
+            area[accessArr2D(x, y)] = new Cell(f);
+        }
+    }
 }
