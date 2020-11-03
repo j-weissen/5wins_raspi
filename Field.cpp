@@ -40,7 +40,7 @@ bool Field::checkWin(int x, int y, symbol currPlayer) {
     bool winner = false;
 
     //horizontal
-    for (ix = initI_negative(x); inArea(x, ix) && !winner; ix++) {
+    for (ix = initI_negative(x); inArea(ix) && !winner; ix++) {
         if (area[accessArr2D(ix, y)]->state == currPlayer) {
             winCount++;
         } else {
@@ -52,7 +52,7 @@ bool Field::checkWin(int x, int y, symbol currPlayer) {
     }
 
     //vertical
-    for (iy = initI_negative(y); inArea(y, iy) && !winner; iy++) {
+    for (iy = initI_negative(y); inArea(iy) && !winner; iy++) {
         if (area[accessArr2D(x, iy)]->state == currPlayer) {
             winCount++;
         } else {
@@ -64,7 +64,7 @@ bool Field::checkWin(int x, int y, symbol currPlayer) {
     }
 
     //left up to right down
-    for (ix = initI_negative(x), iy = initI_negative(y); inArea(x, ix) && inArea(y, iy) && !winner; ix++, iy++) {
+    for (ix = initI_negative(x), iy = initI_negative(y); inArea(ix) && inArea(iy) && !winner; ix++, iy++) {
         if (area[accessArr2D(ix, iy)]->state == currPlayer) {
             winCount++;
         } else {
@@ -76,7 +76,7 @@ bool Field::checkWin(int x, int y, symbol currPlayer) {
     }
 
     //left down to right up
-    for (ix = initI_negative(x), iy = initI_positive(y); inArea(x, ix) && inArea(y, iy) && !winner; ix++, iy--) {
+    for (ix = initI_negative(x), iy = initI_positive(y); inArea(ix) && inArea(iy) && !winner; ix++, iy--) {
         if (area[accessArr2D(ix, iy)]->state == currPlayer) {
             winCount++;
         } else {
@@ -99,8 +99,8 @@ int Field::initI_positive(int z) {
     return (z + winDist >= maxArea) ? maxArea - 1 : z + winDist;
 }
 
-bool Field::inArea(int z, int iz) {
-    return iz < ((z + winDist > maxArea) ? maxArea - 1 : z + winDist) && iz > ((z - winDist < 0) ? -1 : z - winDist);
+bool Field::inArea(int iz) {
+    return iz < maxArea && iz >= 0;
 }
 
 void Field::init_Area() {
@@ -109,4 +109,11 @@ void Field::init_Area() {
             area[accessArr2D(x, y)] = new Cell(f);
         }
     }
+}
+
+void Field::debugArea() {
+    area[accessArr2D(0, 0)]->state = o;
+    area[accessArr2D(0, 1)]->state = o;
+    area[accessArr2D(0, 3)]->state = o;
+    area[accessArr2D(0, 4)]->state = o;
 }

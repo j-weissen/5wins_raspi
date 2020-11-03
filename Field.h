@@ -15,7 +15,11 @@ public:
     static const int maxArea = 15;
     Cell *area[maxArea * maxArea];
 
+    void debugArea();
+
     static int accessArr2D(int x, int y);
+
+    static bool inArea(int iz);
 
     bool checkWin(int x, int y, symbol currPlayer);
 
@@ -32,7 +36,6 @@ private:
 
     static int initI_negative(int z);
     static int initI_positive(int z);
-    static bool inArea(int z, int iz);
 };
 
 #endif //INC_5WINS_RASPI_FIELD_H

@@ -14,25 +14,9 @@ void Game::switchTurn() {
 }
 
 void Game::turn(bool *win) {
-    int xIn, yIn;
 
-    bool isfree = true;
+    inputHuman();
 
-    // Input
-    do {
-        if (!isfree) {
-            std::cout << "Choose an empty field!" << std::endl;
-        }
-        std::cout << "Spieler " << currPlayer << ", Row: " << std::endl;
-        std::cin >> yIn;
-        std::cout << "Spieler " << currPlayer << ", Collumn: " << std::endl;
-        std::cin >> xIn;
-        if (!(yIn <= Field::maxArea && xIn <= Field::maxArea)) {
-            isfree = field.area[Field::accessArr2D(xIn, yIn)]->state == f;
-        } else {
-            isfree = false;
-        }
-    } while (!isfree);
     field.area[Field::accessArr2D(xIn, yIn)]->state = currPlayer;
 
     *win = field.checkWin(xIn, yIn, currPlayer);
@@ -41,4 +25,23 @@ void Game::turn(bool *win) {
         switchTurn();
     }
     field.print();
+}
+
+void Game::inputHuman() {
+    bool isFree = true;
+
+    do {
+        if (!isFree) {
+            std::cout << "Choose an empty field!" << std::endl;
+        }
+        std::cout << "Spieler " << currPlayer << ", Row: " << std::endl;
+        std::cin >> yIn;
+        std::cout << "Spieler " << currPlayer << ", Collumn: " << std::endl;
+        std::cin >> xIn;
+        if (Field::inArea(xIn) && Field::inArea(yIn)) {
+            isFree = field.area[Field::accessArr2D(xIn, yIn)]->state == f;
+        } else {
+            isFree = false;
+        }
+    } while (!isFree);
 }

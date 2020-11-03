@@ -7,6 +7,8 @@
 
 #include "Field.h"
 
+enum player{human,ai};
+
 class Game {
 public:
     symbol currPlayer;
@@ -17,8 +19,12 @@ public:
     explicit Game(symbol currPlayer);
 
 private:
+    player px = human;
+    player po = human;
+    int xIn, yIn;
     void switchTurn();
-
+    void inputHuman();
+    void inputAI();
 };
 
 #endif //INC_5WINS_RASPI_GAME_H
