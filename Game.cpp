@@ -10,7 +10,7 @@ Game::Game(symbol currPlayer) : currPlayer(currPlayer) {
 }
 
 void Game::switchTurn() {
-    currPlayer = (currPlayer == x) ? o : x;
+    currPlayer = (currPlayer == SYMBOL_X) ? SYMBOL_O : SYMBOL_X;
 }
 
 void Game::turn(bool *win) {
@@ -39,7 +39,7 @@ void Game::inputHuman() {
         std::cout << "Spieler " << currPlayer << ", Collumn: " << std::endl;
         std::cin >> xIn;
         if (Field::inArea(xIn) && Field::inArea(yIn)) {
-            isFree = field.area[Field::accessArr2D(xIn, yIn)]->state == f;
+            isFree = field.area[Field::accessArr2D(xIn, yIn)]->state == SYMBOL_FREE;
         } else {
             isFree = false;
         }

@@ -8,7 +8,7 @@
 #include <iostream>
 
 
-enum symbol{x,o,f};
+enum symbol{SYMBOL_X,SYMBOL_O,SYMBOL_FREE};
 
 class Cell {
 public:

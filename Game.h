@@ -6,8 +6,8 @@
 #define INC_5WINS_RASPI_GAME_H
 
 #include "Field.h"
+#include "Player.h"
 
-enum player{human,ai};
 
 class Game {
 public:
@@ -15,12 +15,12 @@ public:
     Field field;
 
     void turn(bool *win);
-
     explicit Game(symbol currPlayer);
 
 private:
-    player px = human;
-    player po = human;
+    Player x;
+    Player o;
+
     int xIn, yIn;
     void switchTurn();
     void inputHuman();

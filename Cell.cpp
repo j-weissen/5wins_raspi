@@ -5,14 +5,14 @@
 #include "Cell.h"
 
 void Cell::clear() {
-    state = f;
+    state = SYMBOL_FREE;
 }
 
 void Cell::display() {
     char c;
-    if (state == f) {
+    if (state == SYMBOL_FREE) {
         c = ' ';
-    } else if (state == x) {
+    } else if (state == SYMBOL_X) {
         c = 'x';
     } else {
         c = 'o';

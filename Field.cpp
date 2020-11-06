@@ -106,14 +106,14 @@ bool Field::inArea(int iz) {
 void Field::init_Area() {
     for (int y = 0; y < maxArea; ++y) {
         for (int x = 0; x < maxArea; ++x) {
-            area[accessArr2D(x, y)] = new Cell(f);
+            area[accessArr2D(x, y)] = new Cell(SYMBOL_FREE);
         }
     }
 }
 
 void Field::debugArea() {
-    area[accessArr2D(0, 0)]->state = o;
-    area[accessArr2D(0, 1)]->state = o;
-    area[accessArr2D(0, 3)]->state = o;
-    area[accessArr2D(0, 4)]->state = o;
+    area[accessArr2D(0, 0)]->state = SYMBOL_O;
+    area[accessArr2D(0, 1)]->state = SYMBOL_O;
+    area[accessArr2D(0, 3)]->state = SYMBOL_O;
+    area[accessArr2D(0, 4)]->state = SYMBOL_O;
 }

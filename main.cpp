@@ -4,7 +4,7 @@
 using namespace std;
 
 int main() {
-    Game game(x); //o wird anfangen wegen dem switchplayer am Anfang des turn loops
+    Game game(SYMBOL_X); //SYMBOL_O wird anfangen wegen dem switchplayer am Anfang des turn loops
     bool win = false;
     game.field.debugArea();
 
@@ -15,7 +15,13 @@ int main() {
     }
 
 
-    cout << "Player \"" << ((game.currPlayer == x) ? "X" : "O") << "\" has won!" << endl;
+    cout << "Player \"" << ((game.currPlayer == SYMBOL_X) ? "X" : "O") << "\" has won!" << endl;
 
     return 0;
 }
+
+
+/**
+ Field Konstruktor/Destruktor
+ class Player
+ */
