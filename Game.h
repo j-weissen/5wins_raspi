@@ -11,18 +11,21 @@
 
 class Game {
 public:
-    symbol currPlayer;
+    Player *currPlayer;
     Field field;
 
     void turn(bool *win);
-    explicit Game(symbol currPlayer);
+    Game(symbol startPlayer, playerType typePlayerX, playerType typePlayerO);
+    ~Game();
 
 private:
-    Player x;
-    Player o;
+    Player *playerX;
+    Player *playerO;
 
     int xIn, yIn;
-    void switchTurn();
+
+    void switchCurrPlayer();
+
     void inputHuman();
     void inputAI();
 };

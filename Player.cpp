@@ -4,10 +4,13 @@
 
 #include "Player.h"
 
-void Player::inputHuman() {
 
+Player::Player(symbol playerSymbol, playerType type) : playerSymbol(playerSymbol), type(type) {}
+
+bool Player::operator==(Player *p) const {
+    return (playerSymbol == p->playerSymbol);
 }
 
-void Player::inputAI() {
-
+char Player::toChar() const {
+    return (playerSymbol == SYMBOL_X) ? 'X' : 'O';
 }

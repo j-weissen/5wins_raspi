@@ -15,24 +15,22 @@ public:
     static const int maxArea = 15;
     Cell *area[maxArea * maxArea];
 
-    void debugArea();
+    Field();
+    void init_Area();
+    void clear();
 
     static int accessArr2D(int x, int y);
 
     static bool inArea(int iz);
 
-    bool checkWin(int x, int y, symbol currPlayer);
+    bool checkWin(int x, int y, symbol currPlayerSymbol);
 
     void print();
 
-    void init_Area();
 
 private:
     static const int win = 5;
     static const int winDist = win - 1;
-
-    void clearAll();
-
 
     static int initI_negative(int z);
     static int initI_positive(int z);

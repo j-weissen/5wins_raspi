@@ -7,19 +7,20 @@
 
 #include "Cell.h"
 
-enum playerType{TYPE_HUMAN,TYPE_AI};
+enum playerType {
+    TYPE_HUMAN, TYPE_AI
+};
 
 
 class Player {
-private:
+public:
     symbol playerSymbol;
     playerType type;
 
-    void inputHuman();
-    void inputAI();
+    Player(symbol playerSymbol, playerType type);
+    bool operator==(Player *p) const;
 
-
-
+    char toChar() const;
 };
 
 

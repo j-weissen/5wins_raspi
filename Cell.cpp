@@ -4,11 +4,7 @@
 
 #include "Cell.h"
 
-void Cell::clear() {
-    state = SYMBOL_FREE;
-}
-
-void Cell::display() {
+void Cell::display() const {
     char c;
     if (state == SYMBOL_FREE) {
         c = ' ';

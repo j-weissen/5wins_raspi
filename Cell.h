@@ -16,9 +16,7 @@ public:
 
     symbol state;
 
-    void clear();
-
-    void display();
+    void display() const;
 };
 
 #endif //INC_5WINS_RASPI_CELL_H
