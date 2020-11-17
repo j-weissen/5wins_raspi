@@ -114,4 +114,28 @@ bool Field::checkWin(int x, int y, symbol currPlayerSymbol) {
     return winner;
 }
 
+bool Field::checkTie() {
+    bool rv = true;
+    int count = 0;
+    int x = 0;
+    int y = 0;
+
+    while (x < maxArea && rv) {
+        while (y < maxArea && rv) {
+            (area[accessArr2D(x,y)]->state != SYMBOL_FREE) ? count++ : rv = false;
+            y++;
+        }
+        x++;
+    }
+    return rv;
+}
+
+void Field::operator=(Field *p) {
+    for (int x = 0; x < maxArea; ++x) {
+        for (int y = 0; y < maxArea; ++y) {
+            area[accessArr2D(x, y)] = p->area[accessArr2D(x, y)];
+        }
+    }
+}
+
 

@@ -25,8 +25,11 @@ public:
 
     bool checkWin(int x, int y, symbol currPlayerSymbol);
 
+    bool checkTie();
+
     void print();
 
+    void operator=(Field *p);
 
 private:
     static const int win = 5;

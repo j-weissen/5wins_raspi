@@ -22,13 +22,15 @@ void Game::switchCurrPlayer() {
     currPlayer = (currPlayer == playerX) ? playerO : playerX;
 }
 
-void Game::turn(bool *win) {
+void Game::turn(bool *win, bool *tie) {
+
 
     (currPlayer->type == TYPE_HUMAN) ? inputHuman() : inputAI();
 
     field.area[Field::accessArr2D(xIn, yIn)]->state = currPlayer->playerSymbol;
 
     *win = field.checkWin(xIn, yIn, currPlayer->playerSymbol);
+    *tie = field.checkTie();
 
     if (!*win) {
         switchCurrPlayer();

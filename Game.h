@@ -14,7 +14,7 @@ public:
     Player *currPlayer;
     Field field;
 
-    void turn(bool *win);
+    void turn(bool *win, bool *tie);
     Game(symbol startPlayer, playerType typePlayerX, playerType typePlayerO);
     ~Game();
 
