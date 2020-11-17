@@ -129,13 +129,3 @@ bool Field::checkTie() {
     }
     return rv;
 }
-
-void Field::operator=(Field *p) {
-    for (int x = 0; x < maxArea; ++x) {
-        for (int y = 0; y < maxArea; ++y) {
-            area[accessArr2D(x, y)] = p->area[accessArr2D(x, y)];
-        }
-    }
-}
-
-

@@ -29,8 +29,6 @@ public:
 
     void print();
 
-    void operator=(Field *p);
-
 private:
     static const int win = 5;
     static const int winDist = win - 1;
