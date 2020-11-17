@@ -2,6 +2,10 @@
 #define FIVEWINS_H
 
 #include <QWidget>
+#include <QGraphicsScene>
+#include "cell_gui.h"
+#include "game.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class fiveWins; }
@@ -17,5 +21,10 @@ public:
 
 private:
     Ui::fiveWins *ui;
+    CellGUI *area[15*15];
+    QGraphicsScene *scene;
+
+    void initArea();
+    void startGame();
 };
 #endif // FIVEWINS_H

@@ -1,20 +1,29 @@
-//
-// Created by maile on 07.10.2020.
-//
+#ifndef GAME_H
+#define GAME_H
 
-#ifndef INC_5WINS_RASPI_GAME_H
-#define INC_5WINS_RASPI_GAME_H
+#include "field.h"
+#include "player.h"
 
-#include "Field.h"
 
 class Game {
-    void switchTurn();
+public:
+    Player *currPlayer;
+    Field field;
+
+    void turn(bool *win);
+    Game(symbol startPlayer, playerType typePlayerX, playerType typePlayerO);
+    ~Game();
+
 private:
-    void turn();
+    Player *playerX;
+    Player *playerO;
+
+    int xIn, yIn;
+
+    void switchCurrPlayer();
+
+    void inputHuman();
+    void inputAI();
 };
 
-
-#endif //INC_5WINS_RASPI_GAME_H
-
-
-//gruessgott
+#endif // GAME_H

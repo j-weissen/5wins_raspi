@@ -9,11 +9,21 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    cell.cpp \
+    cell_gui.cpp \
+    field.cpp \
+    game.cpp \
     main.cpp \
-    fivewins.cpp
+    fivewins.cpp \
+    player.cpp
 
 HEADERS += \
-    fivewins.h
+    cell.h \
+    cell_gui.h \
+    field.h \
+    fivewins.h \
+    game.h \
+    player.h
 
 FORMS += \
     fivewins.ui

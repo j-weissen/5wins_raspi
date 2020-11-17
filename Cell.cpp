@@ -1,17 +1,16 @@
-//
-// Created by maile on 07.10.2020.
-//
+#include "cell.h"
 
-#include "Cell.h"
+    void Cell::display() const {
+        char c;
+        if (state == SYMBOL_FREE) {
+            c = ' ';
+        } else if (state == SYMBOL_X) {
+            c = 'x';
+        } else {
+            c = 'o';
+        }
 
-void clear(){}
-void set(){}
-void checkWin(){}
+        std::cout << "[ " << c << " ]";
+    }
 
-void Cell::clear() {
-
-}
-
-void Cell::set() {
-
-}
+    Cell::Cell(symbol state) : state(state) {};
