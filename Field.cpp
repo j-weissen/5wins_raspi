@@ -28,12 +28,12 @@ int Field::accessArr2D(int x, int y) {
     return y * maxArea + x;
 }
 
-int Field::initI_negative(int z, int range) {
-    return (z - range < 0) ? 0 : z - range;
+int Field::initI_negative(int z) {
+    return (z - winDist < 0) ? 0 : z - winDist;
 }
 
-int Field::initI_positive(int z, int range) {
-    return (z + range >= maxArea) ? maxArea - 1 : z + range;
+int Field::initI_positive(int z) {
+    return (z + winDist >= maxArea) ? maxArea - 1 : z + winDist;
 }
 
 bool Field::inArea(int iz) {

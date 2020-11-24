@@ -24,17 +24,10 @@ private:
 
     int xIn, yIn;
 
-    int aiBestScore = INT32_MIN;
-    int humanBestScore = INT32_MAX;
-
-    Field aiTestField;
-
     void switchCurrPlayer();
 
     void inputHuman();
     void inputAI();
-
-    int aiMinimax(int depth, bool isMaximizing, symbol identity, int tempX, int tempY);
 };
 
 #endif //INC_5WINS_RASPI_GAME_H

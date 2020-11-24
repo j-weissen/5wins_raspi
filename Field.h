@@ -10,6 +10,7 @@
 
 class Field {
 
+
 public:
     static const int maxArea = 15;
     Cell *area[maxArea * maxArea];
@@ -32,8 +33,8 @@ private:
     static const int win = 5;
     static const int winDist = win - 1;
 
-    static int initI_negative(int z, int range = winDist);
-    static int initI_positive(int z, int range = winDist);
+    static int initI_negative(int z);
+    static int initI_positive(int z);
 };
 
 #endif //INC_5WINS_RASPI_FIELD_H
