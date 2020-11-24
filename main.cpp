@@ -4,7 +4,7 @@
 using namespace std;
 
 int main() {
-    Game game(SYMBOL_X, TYPE_HUMAN, TYPE_HUMAN);
+    Game game(SYMBOL_X, TYPE_HUMAN, TYPE_AI);
     bool win = false;
     bool tie = false;
 

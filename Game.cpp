@@ -32,11 +32,13 @@ void Game::turn(bool *win, bool *tie) {
     *win = field.checkWin(xIn, yIn, currPlayer->playerSymbol);
     *tie = field.checkTie();
 
+
+
+    field.print();
+
     if (!*win) {
         switchCurrPlayer();
     }
-
-    field.print();
 }
 
 void Game::inputHuman() {
@@ -59,5 +61,67 @@ void Game::inputHuman() {
 }
 
 void Game::inputAI() {
+    int bestScore = INT32_MIN;
+    int score;
 
+    aiTestField = field;
+
+    for(int x = 0; x < Field::maxArea; x++){
+        for(int y = 0; y < Field::maxArea; y++){
+            if(aiTestField.area[Field::accessArr2D(x, y)]->state == SYMBOL_FREE){
+                score = aiMinimax(0, true, currPlayer->playerSymbol, x, y);
+                if(score > bestScore){
+                    bestScore = score;
+                    xIn = x;
+                    yIn = y;
+                }
+            }
+        }
+    }
+}
+
+int Game::aiMinimax(int depth, bool isMaximizing, symbol identity, int tempX, int  tempY){
+    if(depth > 2){
+        return NULL;
+    }
+
+    int rv;
+    bool rtnBool;
+    symbol enemy = (identity == SYMBOL_X) ? SYMBOL_O : SYMBOL_X;
+    int aiScore;
+    int humanScore;
+
+    if(field.checkWin(tempX, tempY, identity)){
+        rv = 1;
+    } else if(field.checkWin(tempX, tempY, enemy)){
+        rv = -1;
+    } else if(field.checkTie()){
+        rv = 0;
+    }
+
+    if(isMaximizing){
+        for(int x = 0; x < Field::maxArea; x++){
+            for(int y = 0; y < Field::maxArea; y++){
+                if(aiTestField.area[Field::accessArr2D(x, y)]->state == SYMBOL_FREE){
+                    aiTestField.area[Field::accessArr2D(x, y)]->state = identity;
+                    aiScore = rv + aiMinimax(depth + 1, false, enemy, x, y);
+                    aiTestField.area[Field::accessArr2D(x, y)]->state = SYMBOL_FREE;
+                    aiBestScore = std::max(aiScore, aiBestScore);
+                }
+            }
+        }
+        return aiBestScore;
+    }else{
+        for(int x = 0; x < Field::maxArea; x++){
+            for(int y = 0; y < Field::maxArea; y++){
+                if(aiTestField.area[Field::accessArr2D(x, y)]->state == SYMBOL_FREE){
+                    aiTestField.area[Field::accessArr2D(x, y)]->state = enemy;
+                    humanScore = rv + aiMinimax(depth + 1, true, identity, x, y);
+                    aiTestField.area[Field::accessArr2D(x, y)]->state = SYMBOL_FREE;
+                    humanBestScore = std::min(humanScore, humanBestScore);
+                }
+            }
+        }
+        return humanBestScore;
+    }
 }
