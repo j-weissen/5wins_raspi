@@ -116,16 +116,106 @@ bool Field::checkWin(int x, int y, symbol currPlayerSymbol) {
 
 bool Field::checkTie() {
     bool rv = true;
-    int count = 0;
     int x = 0;
     int y = 0;
 
     while (x < maxArea && rv) {
         while (y < maxArea && rv) {
-            (area[accessArr2D(x,y)]->state != SYMBOL_FREE) ? count++ : rv = false;
+            rv = (area[accessArr2D(x,y)]->state != SYMBOL_FREE);
             y++;
         }
         x++;
     }
     return rv;
+}
+
+bool Field::isSurrounded(int x, int y, int range){
+    int cellCount = 0;
+    int ix = 0;
+    int iy = 0;
+
+    //horizontal
+    for (ix = initI_negative(x, range); inArea(ix) && checkRange(x, ix, range) && cellCount == 0; ix++) {
+        if (area[accessArr2D(ix, y)]->state != SYMBOL_FREE) {
+            cellCount++;
+        }
+    }
+
+    //vertical
+    for (iy = initI_negative(y, range); inArea(iy) && checkRange(y, iy, range) && cellCount == 0; iy++) {
+        if (area[accessArr2D(x, iy)]->state != SYMBOL_FREE) {
+            cellCount++;
+        }
+    }
+
+    //left up to right down
+    for (ix = initI_negative(x, range), iy = initI_negative(y, range); inArea(ix) && checkRange(x, ix, range) && inArea(iy) && checkRange(y, iy, range) && cellCount == 0; ix++, iy++) {
+        if (area[accessArr2D(ix, iy)]->state != SYMBOL_FREE) {
+            cellCount++;
+        }
+    }
+
+    //left down to right up
+    for (ix = initI_negative(x, range), iy = initI_positive(y, range); inArea(ix) && checkRange(x, ix, range) && inArea(iy) && checkRange(y, iy, -range) && cellCount == 0; ix++, iy--) {
+        if (area[accessArr2D(ix, iy)]->state != SYMBOL_FREE) {
+            cellCount++;
+        }
+    }
+
+    return (cellCount > 0);
+}
+
+bool Field::checkRange(int start, int pos, int range){
+    bool rv;
+    if (range > 0){
+        rv = (pos <= (start + range));
+    }else{
+        rv = (pos >= (start + range));
+    }
+    return rv;
+}
+
+int Field::checkCon(int x, int y, symbol currPlayerSymbol, symbol enemy){
+    int ix, iy;
+    int conCount = 0;
+    int interrupt = 0;
+
+
+    //horizontal
+    for (ix = initI_negative(x); inArea(ix) && interrupt > 1  && area[accessArr2D(ix, y)]->state == enemy; ix++) {
+        if (area[accessArr2D(ix, y)]->state == currPlayerSymbol) {
+            conCount++;
+        } else {
+            interrupt++;
+        }
+    }
+
+    //vertical
+    for (iy = initI_negative(y), interrupt = 0, conCount = 0; inArea(iy) && interrupt > 1  && area[accessArr2D(ix, y)]->state == enemy; iy++) {
+        if (area[accessArr2D(x, iy)]->state == currPlayerSymbol) {
+            conCount++;
+        } else {
+            conCount = 0;
+        }
+    }
+
+    //left up to right down
+    for (ix = initI_negative(x), iy = initI_negative(y), interrupt = 0; inArea(ix) && inArea(iy) && interrupt > 1  && area[accessArr2D(ix, y)]->state == enemy; ix++, iy++) {
+        if (area[accessArr2D(ix, iy)]->state == currPlayerSymbol) {
+            conCount++;
+        } else {
+            conCount = 0;
+        }
+    }
+
+    //left down to right up
+    for (ix = initI_negative(x), iy = initI_positive(y), interrupt = 0; inArea(ix) && inArea(iy) && interrupt > 1  && area[accessArr2D(ix, y)]->state == enemy; ix++, iy--) {
+        if (area[accessArr2D(ix, iy)]->state == currPlayerSymbol) {
+            conCount++;
+        } else {
+            conCount = 0;
+        }
+    }
+
+    return (conCount*conCount*4);
 }

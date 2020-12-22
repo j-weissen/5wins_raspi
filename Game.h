@@ -7,7 +7,8 @@
 
 #include "Field.h"
 #include "Player.h"
-
+class Field;
+class Player;
 
 class Game {
 public:
@@ -26,6 +27,8 @@ private:
 
     int aiBestScore = INT32_MIN;
     int humanBestScore = INT32_MAX;
+    int aiBestMove[2];
+    int humanBestMove[2];
 
     Field aiTestField;
 
@@ -35,6 +38,8 @@ private:
     void inputAI();
 
     int aiMinimax(int depth, bool isMaximizing, symbol identity, int tempX, int tempY);
+    int bestScore(int depth, symbol identity, symbol enemy, int x, int y);
+    void aiCheckMove(int depth, int x, int y, symbol identity, symbol enemy, int *aiScore, int prev, bool isMaximizing);
 };
 
 #endif //INC_5WINS_RASPI_GAME_H

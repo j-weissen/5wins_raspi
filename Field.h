@@ -11,7 +11,7 @@
 class Field {
 
 public:
-    static const int maxArea = 15;
+    static const int maxArea = 5;
     Cell *area[maxArea * maxArea];
 
     Field();
@@ -23,6 +23,10 @@ public:
     static bool inArea(int iz);
 
     bool checkWin(int x, int y, symbol currPlayerSymbol);
+    int checkCon(int x, int y, symbol currPlayerSymbol, symbol enemy);
+
+    bool isSurrounded(int x, int y, int range);
+    static bool checkRange(int start, int pos, int range);
 
     bool checkTie();
 
@@ -31,6 +35,7 @@ public:
 private:
     static const int win = 5;
     static const int winDist = win - 1;
+
 
     static int initI_negative(int z, int range = winDist);
     static int initI_positive(int z, int range = winDist);
