@@ -117,9 +117,10 @@ bool Field::checkWin(int x, int y, symbol currPlayerSymbol) {
 bool Field::checkTie() {
     bool rv = true;
     int x = 0;
-    int y = 0;
+    int y;
 
     while (x < maxArea && rv) {
+        y = 0;
         while (y < maxArea && rv) {
             rv = (area[accessArr2D(x,y)]->state != SYMBOL_FREE);
             y++;

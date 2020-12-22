@@ -99,19 +99,18 @@ int Game::aiMinimax(int depth, bool isMaximizing, symbol identity, int tempX, in
     if(isMaximizing){
         for(int x = 0; x < Field::maxArea; x++){
             for(int y = 0; y < Field::maxArea; y++){
-                aiCheckMove(depth, tempX, tempY, identity, enemy, &aiScore, rv, isMaximizing);
+                aiCheckMove(depth, x, y, identity, enemy, &aiScore, rv, isMaximizing);
             }
         }
         aiTestField.area[Field::accessArr2D(aiBestMove[0], aiBestMove[1])]->state = identity;
     } else{
         for(int x = 0; x < Field::maxArea; x++){
             for(int y = 0; y < Field::maxArea; y++){
-                aiCheckMove(depth, tempX, tempY, enemy, identity, &humanScore, rv, isMaximizing);
+                aiCheckMove(depth, x, y, enemy, identity, &humanScore, rv, isMaximizing);
             }
         }
-        aiTestField.area[Field::accessArr2D(aiBestMove[0], aiBestMove[1])]->state = enemy;
+        aiTestField.area[Field::accessArr2D(humanBestMove[0], humanBestMove[1])]->state = identity;
     }
-    aiTestField.print();
     return rv;
 }
 
@@ -141,7 +140,7 @@ void Game::aiCheckMove(int depth, int x, int y, symbol identity, symbol enemy, i
             aiBestScore = *currScore;
             aiBestMove[0] = x;
             aiBestMove[1] = y;
-        }else if (!aiTurn && *currScore > humanBestScore){
+        }else if (!aiTurn && *currScore < humanBestScore){
             humanBestScore = *currScore;
             humanBestMove[0] = x;
             humanBestMove[1] = y;
