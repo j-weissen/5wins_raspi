@@ -1,14 +1,24 @@
 #include "field.h"
 
-
-Field::Field() {
+Field::Field(QGraphicsScene *scene) {
+    this->scene = scene;
     init_Area();
 }
 
-void Field::init_Area() {
+Field::~Field()
+{
     for (int y = 0; y < maxArea; ++y) {
         for (int x = 0; x < maxArea; ++x) {
-            area[accessArr2D(x, y)] = new Cell(SYMBOL_FREE);
+            delete area[accessArr2D(x, y)];
+        }
+    }
+}
+
+void Field::init_Area() {
+    for (int i = 0; i<15 ; ++i) {
+        for (int j = 0; j<15 ; ++j) {
+            area[i + j*15] = new CellGUI(i, j);
+            scene->addItem(area[i + j*15]);
         }
     }
 }

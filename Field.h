@@ -1,16 +1,19 @@
 #ifndef FIELD_H
 #define FIELD_H
 
-#include "cell.h"
+#include "cell_gui.h"
+#include <QGraphicsScene>
 
 class Field {
 
 
 public:
     static const int maxArea = 15;
-    Cell *area[maxArea * maxArea];
+    CellGUI *area[maxArea * maxArea];
+    QGraphicsScene *scene;
 
-    Field();
+    Field(QGraphicsScene *scene);
+    ~Field();
     void init_Area();
     void clear();
 

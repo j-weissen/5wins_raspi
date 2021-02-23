@@ -3,15 +3,17 @@
 
 #include "field.h"
 #include "player.h"
-
+#include <QLabel>
 
 class Game {
 public:
     Player *currPlayer;
-    Field field;
+    Field *field;
+    QLabel *message;
+    QGraphicsScene *scene;
 
     void turn(bool *win);
-    Game(symbol startPlayer, playerType typePlayerX, playerType typePlayerO);
+    Game(symbol startPlayer, playerType typePlayerX, playerType typePlayerO, QLabel *message, QGraphicsScene *scene);
     ~Game();
 
 private:

@@ -38,10 +38,10 @@
   <widget class="QLabel" name="message">
    <property name="geometry">
     <rect>
-     <x>25</x>
-     <y>930</y>
+     <x>20</x>
+     <y>920</y>
      <width>900</width>
-     <height>16</height>
+     <height>41</height>
     </rect>
    </property>
    <property name="text">
@@ -49,6 +49,19 @@
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_turn">
+   <property name="geometry">
+    <rect>
+     <x>35</x>
+     <y>875</y>
+     <width>871</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Spieler X ist am Zug.</string>
    </property>
   </widget>
  </widget>

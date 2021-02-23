@@ -21,10 +21,8 @@ public:
 
 private:
     Ui::fiveWins *ui;
-    CellGUI *area[15*15];
     QGraphicsScene *scene;
 
-    void initArea();
     void startGame();
 };
 #endif // FIVEWINS_H
