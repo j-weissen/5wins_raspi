@@ -1,12 +1,13 @@
 #include "cell_gui.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QString>
+#include <QCoreApplication>
 
 int CellGUI::curr = 0;
-bool CellGUI::clickable = false;
 
 CellGUI::CellGUI(int x, int y) : Cell(SYMBOL_FREE)
 {
+    setObjectName("CellGUI");
     this->x = x*SIZE;
     this->y = y*SIZE;
     pressed = false;
@@ -21,12 +22,11 @@ void CellGUI::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 {
 
     QRectF rec = boundingRect();
-    QColor colors[2] = {Qt::blue, Qt::black};
+    QColor colors[2] = {Qt::green, QColor(255,20,147)};
 
     if(color == Qt::transparent && pressed){
         color = colors[curr%2];
         curr++;
-        CellGUI::clickable = false;
     }
     QBrush brush = (pressed) ? color : (Qt::transparent);
     painter->fillRect(rec, brush);
@@ -35,16 +35,11 @@ void CellGUI::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 
 }
 
-void CellGUI::mousePressEvent(QGraphicsSceneMouseEvent *event)
+void CellGUI::clicked()
 {
     if(!pressed){
-        QString temp;
-        qDebug() << "Pressed cell X: " << QString::number(x/SIZE) << " Y: " + QString::number(y/SIZE);
-        qDebug() << event->pos() << QString("%1").arg((unsigned long long int)this);
         pressed = true;
         update();
-        QGraphicsItem::mousePressEvent(event);
-
     }
 }
 

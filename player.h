@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include "cell.h"
+#include <QString>
 
 enum playerType {
     TYPE_HUMAN, TYPE_AI
@@ -17,6 +18,7 @@ public:
     bool operator==(Player *p) const;
 
     char toChar() const;
+    QString getOutput();
 };
 
 

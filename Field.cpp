@@ -21,6 +21,7 @@ void Field::init_Area() {
             scene->addItem(area[i + j*15]);
         }
     }
+    scene->update();
 }
 
 void Field::clear() {
@@ -29,6 +30,12 @@ void Field::clear() {
             delete area[accessArr2D(x, y)];
         }
     }
+}
+
+void Field::reset_Area()
+{
+    clear();
+    init_Area();
 }
 
 int Field::accessArr2D(int x, int y) {

@@ -3,24 +3,28 @@
 
 #include <QPainter>
 #include <QGraphicsItem>
+#include <QMouseEvent>
 #include <QtDebug>
 #include "cell.h"
 
-class CellGUI : public QGraphicsItem, public Cell
+class CellGUI : public QGraphicsItem, public Cell, public QObject
 {
 public:
     static const int SIZE = 50;
     static int curr;
-    static bool clickable;
     bool pressed;
+
+    int getX(){return x;};
+    int getY(){return y;};
 
     CellGUI(int x, int y);
 
-    QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr);
-
+    QRectF boundingRect() const override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
+    void clicked();
 protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+
+
 
 private:
     int x,y;

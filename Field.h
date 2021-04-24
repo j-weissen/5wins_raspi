@@ -16,6 +16,7 @@ public:
     ~Field();
     void init_Area();
     void clear();
+    void reset_Area();
 
     static int accessArr2D(int x, int y);
 

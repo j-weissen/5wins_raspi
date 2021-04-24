@@ -9,3 +9,12 @@ bool Player::operator==(Player *p) const {
 char Player::toChar() const {
     return (playerSymbol == SYMBOL_X) ? 'X' : 'O';
 }
+
+QString Player::getOutput()
+{
+    QString out = "Spieler ";
+    out.append(toChar());
+    out += " ist am Zug.";
+
+    return out;
+}

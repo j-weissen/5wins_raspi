@@ -38,8 +38,8 @@
   <widget class="QLabel" name="message">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>920</y>
+     <x>30</x>
+     <y>915</y>
      <width>900</width>
      <height>41</height>
     </rect>
@@ -56,12 +56,25 @@
     <rect>
      <x>35</x>
      <y>875</y>
-     <width>871</width>
+     <width>641</width>
      <height>41</height>
     </rect>
    </property>
    <property name="text">
     <string>Spieler X ist am Zug.</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_reset">
+   <property name="geometry">
+    <rect>
+     <x>800</x>
+     <y>875</y>
+     <width>93</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Reset</string>
    </property>
   </widget>
  </widget>

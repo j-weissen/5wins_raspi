@@ -3,9 +3,7 @@
 
 #include <QWidget>
 #include <QGraphicsScene>
-#include "cell_gui.h"
 #include "game.h"
-
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class fiveWins; }
@@ -19,10 +17,21 @@ public:
     fiveWins(QWidget *parent = nullptr);
     ~fiveWins();
 
+public slots:
+    bool eventFilter(QObject* watched, QEvent* event) override;
+
+
+private slots:
+    void on_pushButton_reset_clicked();
+
 private:
+    int playedGames;
     Ui::fiveWins *ui;
     QGraphicsScene *scene;
+    Game *game;
+    static constexpr int SCENE_OFFSET= 100;
 
-    void startGame();
+    void resetGame();
+
 };
 #endif // FIVEWINS_H
