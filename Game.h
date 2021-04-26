@@ -15,6 +15,7 @@ public:
     void turn(bool *win);
     void inputHuman(int x, int y);
     bool getWin();
+    bool getTie();
     void reset();
     Game(symbol startPlayer, playerType typePlayerX, playerType typePlayerO, QLabel *message, QGraphicsScene *scene);
     ~Game();
@@ -25,6 +26,7 @@ private:
 
     int xIn, yIn;
     bool win;
+    bool tie;
 
     void switchCurrPlayer();
 

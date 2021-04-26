@@ -23,7 +23,7 @@ public:
     static bool inArea(int iz);
 
     bool checkWin(int x, int y, symbol currPlayerSymbol);
-
+    bool checkTie();
     void print();
 
 
@@ -31,8 +31,8 @@ private:
     static const int win = 5;
     static const int winDist = win - 1;
 
-    static int initI_negative(int z);
-    static int initI_positive(int z);
+    static int initI_negative(int z, int range=winDist);
+    static int initI_positive(int z, int range=winDist);
 };
 
 #endif // FIELD_H
