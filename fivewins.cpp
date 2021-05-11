@@ -32,9 +32,7 @@ fiveWins::fiveWins(QWidget *parent)
     ui->graphicsView->setScene(scene);
 
     game = new Game(SYMBOL_X, TYPE_HUMAN, TYPE_HUMAN, ui->label_turn, scene);
-    for (auto brumm : game->field->area){
-        brumm->stackBefore(io);
-    }
+
     qApp->installEventFilter(this);
     showMaximized();
 }
@@ -67,6 +65,9 @@ bool fiveWins::eventFilter(QObject *watched, QEvent *event)
                     ui->message->setText(out);
 
                     io->setPlainText(out);
+                    for (auto brumm : game->field->area){
+                        brumm->stackBefore(io);
+                    }
                     io->show();
                 }
 
