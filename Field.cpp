@@ -15,10 +15,10 @@ Field::~Field()
 }
 
 void Field::init_Area() {
-    for (int i = 0; i<15 ; ++i) {
-        for (int j = 0; j<15 ; ++j) {
-            area[i + j*15] = new CellGUI(i, j);
-            scene->addItem(area[i + j*15]);
+    for (int i = 0; i<maxArea ; ++i) {
+        for (int j = 0; j<maxArea ; ++j) {
+            area[i + j*maxArea] = new CellGUI(i, j);
+            scene->addItem(area[i + j*maxArea]);
         }
     }
     scene->update();

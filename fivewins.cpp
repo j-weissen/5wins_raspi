@@ -16,9 +16,25 @@ fiveWins::fiveWins(QWidget *parent)
 
     playedGames = 0;
 
+
+    QFont font;
+    font.setBold(true);
+    font.setPixelSize(60);
+
+
+    io = new QGraphicsTextItem;
+    io->setDefaultTextColor(Qt::blue);
+    io->setPos(0, 0);
+    io->setFont(font);
+
+    scene->addItem(io);
+
     ui->graphicsView->setScene(scene);
 
     game = new Game(SYMBOL_X, TYPE_HUMAN, TYPE_HUMAN, ui->label_turn, scene);
+    for (auto brumm : game->field->area){
+        brumm->stackBefore(io);
+    }
     qApp->installEventFilter(this);
     showMaximized();
 }
@@ -43,9 +59,20 @@ bool fiveWins::eventFilter(QObject *watched, QEvent *event)
                 game->field->area[Field::accessArr2D(x, y)]->clicked();
                 game->inputHuman(x, y);
 
-                if (game->getWin() || game->getTie()){
-                    ui->pushButton_reset->show();
+                if (game->getWin()){
+                    QString out = "Spieler ";
+                    out.append(game->currPlayer->toChar());
+                    out += " hat gewonnen!";
+
+                    ui->message->setText(out);
+
+                    io->setPlainText(out);
+                    io->show();
                 }
+
+                ui->pushButton_reset->show();
+            }else if (game->getTie()){
+                ui->message->setText("Es ist ein Unentschieden");
             }
 
         }else if (mouseEvent->button() == Qt::LeftButton && (game->getWin() || game->getTie())){
@@ -63,6 +90,7 @@ void fiveWins::resetGame()
     CellGUI::curr = 0;
 
     ui->label_turn->setText(game->currPlayer->getOutput());
+    io->hide();
 
     playedGames++;
 

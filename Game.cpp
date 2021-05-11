@@ -16,8 +16,6 @@ Game::~Game() {
     delete playerX;
     delete playerO;
     delete field;
-    delete message;
-    delete scene;
 }
 
 void Game::switchCurrPlayer() {
@@ -47,14 +45,6 @@ void Game::inputHuman(int x, int y) {
         switchCurrPlayer();
 
         message->setText(currPlayer->getOutput());
-    }else if (win){
-        out = "Spieler ";
-        out.append(currPlayer->toChar());
-        out += " hat gewonnen!";
-        message->setText(out);
-    }else{
-        out = "Es ist ein Unentschieden";
-        message->setText(out);
     }
 
 }

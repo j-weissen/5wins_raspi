@@ -28,6 +28,7 @@ private:
     int playedGames;
     Ui::fiveWins *ui;
     QGraphicsScene *scene;
+    QGraphicsTextItem *io;
     Game *game;
     static constexpr int SCENE_OFFSET= 100;
 
