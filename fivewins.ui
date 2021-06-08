@@ -77,6 +77,19 @@
     <string>Reset</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="pushButton_exit_menu">
+   <property name="geometry">
+    <rect>
+     <x>700</x>
+     <y>875</y>
+     <width>93</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Exit to Menu</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

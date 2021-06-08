@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>menu</class>
+ <widget class="QWidget" name="menu">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>950</width>
+    <height>950</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>menu</string>
+  </property>
+  <widget class="QPushButton" name="pushButton_local2Player">
+   <property name="geometry">
+    <rect>
+     <x>337</x>
+     <y>270</y>
+     <width>275</width>
+     <height>130</height>
+    </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>275</width>
+     <height>130</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>Local 2 Player</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_joinServer">
+   <property name="geometry">
+    <rect>
+     <x>490</x>
+     <y>430</y>
+     <width>275</width>
+     <height>130</height>
+    </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>275</width>
+     <height>130</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>Join Server</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_createServer">
+   <property name="geometry">
+    <rect>
+     <x>185</x>
+     <y>430</y>
+     <width>275</width>
+     <height>130</height>
+    </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>275</width>
+     <height>130</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>Create Server</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_vsAI">
+   <property name="geometry">
+    <rect>
+     <x>337</x>
+     <y>590</y>
+     <width>275</width>
+     <height>130</height>
+    </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>275</width>
+     <height>130</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>VS AI</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_exit">
+   <property name="geometry">
+    <rect>
+     <x>337</x>
+     <y>750</y>
+     <width>275</width>
+     <height>130</height>
+    </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>275</width>
+     <height>130</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_logo">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>30</y>
+     <width>270</width>
+     <height>191</height>
+    </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>16777215</height>
+    </size>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5wins">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>70</y>
+     <width>471</width>
+     <height>141</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>OCR A Extended</family>
+     <pointsize>85</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>5wins</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

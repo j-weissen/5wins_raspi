@@ -15,6 +15,10 @@ class fiveWins : public QWidget
 
 public:
     fiveWins(QWidget *parent = nullptr);
+    Game* getGame();
+
+    void resetGame();
+    void setMenu(QWidget *m);
     ~fiveWins();
 
 public slots:
@@ -24,15 +28,15 @@ public slots:
 private slots:
     void on_pushButton_reset_clicked();
 
+    void on_pushButton_exit_menu_clicked();
+
 private:
     int playedGames;
     Ui::fiveWins *ui;
     QGraphicsScene *scene;
     QGraphicsTextItem *io;
     Game *game;
+    QWidget *m;
     static constexpr int SCENE_OFFSET= 100;
-
-    void resetGame();
-
 };
 #endif // FIVEWINS_H

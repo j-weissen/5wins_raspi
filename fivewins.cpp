@@ -34,7 +34,11 @@ fiveWins::fiveWins(QWidget *parent)
     game = new Game(SYMBOL_X, TYPE_HUMAN, TYPE_HUMAN, ui->label_turn, scene);
 
     qApp->installEventFilter(this);
-    showMaximized();
+}
+
+Game* fiveWins::getGame()
+{
+    return game;
 }
 
 fiveWins::~fiveWins()
@@ -46,12 +50,12 @@ fiveWins::~fiveWins()
 
 bool fiveWins::eventFilter(QObject *watched, QEvent *event)
 {
-    if (event->type() == QEvent::MouseButtonPress){
+    if (!this->isHidden() && this->isActiveWindow() && event->type() == QEvent::MouseButtonPress){
 
         QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
         if (mouseEvent->button() == Qt::LeftButton && game->currPlayer->type == TYPE_HUMAN && !game->getWin() && !game->getTie()){
-            int x = (mouseEvent->x() - SCENE_OFFSET)/CellGUI::SIZE;
-            int y = (mouseEvent->y() - SCENE_OFFSET)/CellGUI::SIZE;
+            int x = (mouseEvent->position().x() - SCENE_OFFSET)/CellGUI::SIZE;
+            int y = (mouseEvent->position().y() - SCENE_OFFSET)/CellGUI::SIZE;
 
             if (Field::inArea(x) && Field::inArea(y)){ //click is in the field
                 game->field->area[Field::accessArr2D(x, y)]->clicked();
@@ -69,11 +73,15 @@ bool fiveWins::eventFilter(QObject *watched, QEvent *event)
                         brumm->stackBefore(io);
                     }
                     io->show();
+                    ui->pushButton_reset->show();
+                }else if (game->getTie()){
+                    ui->message->setText("Es ist ein Unentschieden");
+                    ui->pushButton_reset->show();
                 }
 
-                ui->pushButton_reset->show();
-            }else if (game->getTie()){
-                ui->message->setText("Es ist ein Unentschieden");
+
+            }else {
+                return QObject::eventFilter(watched, event);
             }
 
         }else if (mouseEvent->button() == Qt::LeftButton && (game->getWin() || game->getTie())){
@@ -98,9 +106,22 @@ void fiveWins::resetGame()
     ui->message->setText("Gespielte Spiele: " + QString::number(playedGames));
 }
 
+void fiveWins::setMenu(QWidget *m)
+{
+    this->m = m;
+}
+
 
 void fiveWins::on_pushButton_reset_clicked()
 {
     resetGame();
     ui->pushButton_reset->hide();
 }
+
+void fiveWins::on_pushButton_exit_menu_clicked()
+{
+    resetGame();
+    m->show();
+    this->close();
+}
+

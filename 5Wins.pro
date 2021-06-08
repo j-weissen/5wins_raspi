@@ -15,7 +15,8 @@ SOURCES += \
     player.cpp \
     cell.cpp \
     cell_gui.cpp \
-    fivewins.cpp
+    fivewins.cpp \
+    menu.cpp
 
 HEADERS += \
     game.h \
@@ -23,10 +24,12 @@ HEADERS += \
     player.h \
     cell.h \
     cell_gui.h \
-    fivewins.h
+    fivewins.h \
+    menu.h
 
 FORMS += \
-    fivewins.ui
+    fivewins.ui \
+    menu.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
