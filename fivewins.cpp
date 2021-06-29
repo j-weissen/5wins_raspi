@@ -51,7 +51,7 @@ fiveWins::~fiveWins()
 bool fiveWins::eventFilter(QObject *watched, QEvent *event)
 {
     if (!this->isHidden() && this->isActiveWindow() && event->type() == QEvent::MouseButtonPress){
-
+        qDebug() << event;
         QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
         if (mouseEvent->button() == Qt::LeftButton && game->currPlayer->type == TYPE_HUMAN && !game->getWin() && !game->getTie()){
             int x = (mouseEvent->position().x() - SCENE_OFFSET)/CellGUI::SIZE;
@@ -80,8 +80,16 @@ bool fiveWins::eventFilter(QObject *watched, QEvent *event)
                 }
 
 
-            }else {
-                return QObject::eventFilter(watched, event);
+            }else { //out of field
+                qDebug() << event;
+                if (event->type() == QEvent::Quit){
+                    resetGame();
+                    m->show();
+                    this->close();
+                    return true;
+                }else{
+                    return QObject::eventFilter(watched, event);
+                }
             }
 
         }else if (mouseEvent->button() == Qt::LeftButton && (game->getWin() || game->getTie())){
