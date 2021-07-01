@@ -17,6 +17,8 @@ public:
     fiveWins(QWidget *parent = nullptr);
     Game* getGame();
 
+    void setupGui();
+
     void resetGame();
     void setMenu(QWidget *m);
     ~fiveWins();
@@ -37,6 +39,6 @@ private:
     QGraphicsTextItem *io;
     Game *game;
     QWidget *m;
-    static constexpr int SCENE_OFFSET= 100;
+    int sceneOffsetX, sceneOffsetY;
 };
 #endif // FIVEWINS_H

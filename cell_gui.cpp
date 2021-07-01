@@ -4,18 +4,19 @@
 #include <QCoreApplication>
 
 int CellGUI::curr = 0;
+int CellGUI::size;
 
 CellGUI::CellGUI(int x, int y) : Cell(SYMBOL_FREE)
 {
     setObjectName("CellGUI");
-    this->x = x*SIZE;
-    this->y = y*SIZE;
+    this->x = x*size;
+    this->y = y*size;
     pressed = false;
 }
 
 QRectF CellGUI::boundingRect() const
 {
-    return QRectF(x,y, SIZE, SIZE);
+    return QRectF(x,y, size, size);
 }
 
 void CellGUI::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -43,3 +44,12 @@ void CellGUI::clicked()
     }
 }
 
+int CellGUI::getSize()
+{
+    return size;
+}
+
+void CellGUI::setSize(int newSize)
+{
+    size = newSize;
+}

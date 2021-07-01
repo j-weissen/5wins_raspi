@@ -3,6 +3,7 @@
 #include "game.h"
 #include <QEvent>
 #include <QMouseEvent>
+#include <iostream>
 
 fiveWins::fiveWins(QWidget *parent)
     : QWidget(parent)
@@ -11,6 +12,7 @@ fiveWins::fiveWins(QWidget *parent)
 
     ui->setupUi(this);
     ui->pushButton_reset->hide();
+    setupGui();
 
     scene = new QGraphicsScene(this);
 
@@ -41,6 +43,44 @@ Game* fiveWins::getGame()
     return game;
 }
 
+void fiveWins::setupGui(){
+    QRect scr = qApp->primaryScreen()->geometry();
+    int height1 = scr.height();
+    int width1 = scr.width();
+    int currheigt, currwidth;
+
+
+    qDebug() << height1 << width1;
+    setFixedSize(width1, height1);
+
+    sceneOffsetX = width1 / 20;
+    sceneOffsetY = height1 / 20;
+
+    width1 -= 2*sceneOffsetX;
+    height1 -= 2*sceneOffsetY;
+
+
+    currwidth = std::min(height1, width1);
+    currheigt = currwidth;
+    CellGUI::setSize(currwidth/15);
+
+    sceneOffsetX += width1/2 - currwidth/2;
+    ui->graphicsView->setGeometry(sceneOffsetX, sceneOffsetY, currwidth, currheigt);
+
+    currheigt = sceneOffsetY;
+    ui->label_turn->setGeometry(sceneOffsetX, sceneOffsetY/10, currwidth, currheigt);
+
+    currheigt = sceneOffsetY;
+    ui->message->setGeometry(sceneOffsetX, sceneOffsetY + height1, currwidth, currheigt);
+
+    currheigt = sceneOffsetY - height()/40;
+    currwidth = width()/20;
+    ui->pushButton_exit_menu->setGeometry(sceneOffsetX, sceneOffsetY + height1 + currheigt/2, currwidth, currheigt);
+    ui->pushButton_exit_menu->setStyleSheet("QPushButton {font: bold " + QString::number(std::max(currwidth/7, 1)) + "px;}");
+    ui->pushButton_reset->setGeometry(sceneOffsetX + std::min(width1, height1) - currwidth, sceneOffsetY + height1 + currheigt/2, currwidth, currheigt);
+    ui->pushButton_reset->setStyleSheet("QPushButton {font: bold " + QString::number(std::max(currwidth/7, 1)) + "px;}");
+}
+
 fiveWins::~fiveWins()
 {
     delete game;
@@ -51,11 +91,10 @@ fiveWins::~fiveWins()
 bool fiveWins::eventFilter(QObject *watched, QEvent *event)
 {
     if (!this->isHidden() && this->isActiveWindow() && event->type() == QEvent::MouseButtonPress){
-        qDebug() << event;
         QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
         if (mouseEvent->button() == Qt::LeftButton && game->currPlayer->type == TYPE_HUMAN && !game->getWin() && !game->getTie()){
-            int x = (mouseEvent->position().x() - SCENE_OFFSET)/CellGUI::SIZE;
-            int y = (mouseEvent->position().y() - SCENE_OFFSET)/CellGUI::SIZE;
+            int x = (mouseEvent->position().x() - sceneOffsetX)/CellGUI::getSize();
+            int y = (mouseEvent->position().y() - sceneOffsetY)/CellGUI::getSize();
 
             if (Field::inArea(x) && Field::inArea(y)){ //click is in the field
                 game->field->area[Field::accessArr2D(x, y)]->clicked();
@@ -81,7 +120,6 @@ bool fiveWins::eventFilter(QObject *watched, QEvent *event)
 
 
             }else { //out of field
-                qDebug() << event;
                 if (event->type() == QEvent::Quit){
                     resetGame();
                     m->show();

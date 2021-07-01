@@ -10,23 +10,29 @@
 class CellGUI : public QGraphicsItem, public Cell, public QObject
 {
 public:
-    static const int SIZE = 50;
     static int curr;
     bool pressed;
 
     int getX(){return x;};
     int getY(){return y;};
 
+
     CellGUI(int x, int y);
 
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
     void clicked();
+
+    static int getSize();
+    static void setSize(int newSize);
+
 protected:
 
 
 
 private:
+
+    static int size;
     int x,y;
     QColor color = Qt::transparent;
 

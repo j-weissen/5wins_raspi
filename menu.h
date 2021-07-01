@@ -21,6 +21,7 @@ private slots:
 
     void on_pushButton_local2Player_clicked();
 
+
 private:
     Ui::menu *ui;
     fiveWins *gameWidget;
