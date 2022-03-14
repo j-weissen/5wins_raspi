@@ -18,7 +18,6 @@ fiveWins::fiveWins(QWidget *parent)
 
     playedGames = 0;
 
-
     QFont font;
     font.setBold(true);
     font.setPixelSize(60);
@@ -49,8 +48,6 @@ void fiveWins::setupGui(){
     int width1 = scr.width();
     int currheigt, currwidth;
 
-
-    qDebug() << height1 << width1;
     setFixedSize(width1, height1);
 
     sceneOffsetX = width1 / 20;
@@ -96,7 +93,7 @@ bool fiveWins::eventFilter(QObject *watched, QEvent *event)
             int x = (mouseEvent->position().x() - sceneOffsetX)/CellGUI::getSize();
             int y = (mouseEvent->position().y() - sceneOffsetY)/CellGUI::getSize();
 
-            if (Field::inArea(x) && Field::inArea(y)){ //click is in the field
+            if (Field::inArea(x, y)){ //click is in the field
                 game->field->area[Field::accessArr2D(x, y)]->clicked();
                 game->inputHuman(x, y);
 

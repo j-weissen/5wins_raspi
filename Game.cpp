@@ -26,7 +26,7 @@ void Game::turn(bool *win) {
 
     (currPlayer->type == TYPE_HUMAN) ? inputHuman(-1,-1) : inputAI();
 
-    *win = field->checkWin(xIn, yIn, currPlayer->playerSymbol);
+    *win = field->checkWin();
 
     if (!*win) {
         switchCurrPlayer();
@@ -38,7 +38,8 @@ void Game::turn(bool *win) {
 void Game::inputHuman(int x, int y) {
     QString out;
     field->area[Field::accessArr2D(x, y)]->state = currPlayer->playerSymbol;
-    win = field->checkWin(x, y, currPlayer->playerSymbol);
+    field->setPrevCell(field->area[Field::accessArr2D(x, y)]);
+    win = field->checkWin();
     tie = field->checkTie();
 
     if(!win){

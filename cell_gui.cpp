@@ -9,14 +9,14 @@ int CellGUI::size;
 CellGUI::CellGUI(int x, int y) : Cell(SYMBOL_FREE)
 {
     setObjectName("CellGUI");
-    this->x = x*size;
-    this->y = y*size;
+    this->x = x;
+    this->y = y;
     pressed = false;
 }
 
 QRectF CellGUI::boundingRect() const
 {
-    return QRectF(x,y, size, size);
+    return QRectF(x*size,y*size, size, size);
 }
 
 void CellGUI::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

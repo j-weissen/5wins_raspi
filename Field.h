@@ -20,19 +20,27 @@ public:
 
     static int accessArr2D(int x, int y);
 
-    static bool inArea(int iz);
+    static bool inArea(int x, int y);
 
-    bool checkWin(int x, int y, symbol currPlayerSymbol);
+    bool checkWin();
     bool checkTie();
     void print();
+
+    void setPrevCell(CellGUI* cell);
 
 
 private:
     static const int win = 5;
     static const int winDist = win - 1;
 
-    static int initI_negative(int z, int range=winDist);
-    static int initI_positive(int z, int range=winDist);
+    int initI_negative(int z);
+    int initI_negative(int z, int dist);
+    int initI_positive(int z, int dist);
+    int getMaxDiagonalDistLeftUp(int x, int y);
+    int getMaxDiagonalDistLeftDown(int x, int y);
+    CellGUI *previouslyChanged;
+
+    CellGUI* accessCell(int x, int y);
 };
 
 #endif // FIELD_H
