@@ -31,7 +31,7 @@ public:
 
 private:
     static const int win = 5;
-    static const int winDist = win - 1;
+    static const int winDist = win;
 
     int initI_negative(int z);
     int initI_negative(int z, int dist);

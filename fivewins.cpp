@@ -93,7 +93,7 @@ bool fiveWins::eventFilter(QObject *watched, QEvent *event)
             int x = (mouseEvent->position().x() - sceneOffsetX)/CellGUI::getSize();
             int y = (mouseEvent->position().y() - sceneOffsetY)/CellGUI::getSize();
 
-            if (Field::inArea(x, y)){ //click is in the field
+            if (Field::inArea(x, y) && game->field->area[Field::accessArr2D(x, y)]->state == SYMBOL_FREE){ //click is in the field
                 game->field->area[Field::accessArr2D(x, y)]->clicked();
                 game->inputHuman(x, y);
 
