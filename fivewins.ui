@@ -31,8 +31,8 @@
   <widget class="QGraphicsView" name="graphicsView">
    <property name="geometry">
     <rect>
-     <x>25</x>
-     <y>25</y>
+     <x>10</x>
+     <y>30</y>
      <width>900</width>
      <height>900</height>
     </rect>
@@ -88,6 +88,12 @@
      <width>93</width>
      <height>28</height>
     </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
    </property>
    <property name="text">
     <string>Exit to Menu</string>

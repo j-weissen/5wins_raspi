@@ -71,11 +71,11 @@ void fiveWins::setupGui(){
     ui->message->setGeometry(sceneOffsetX, sceneOffsetY + height1, currwidth, currheigt);
 
     currheigt = sceneOffsetY - height()/40;
-    currwidth = width()/20;
+    currwidth = width()/18;
     ui->pushButton_exit_menu->setGeometry(sceneOffsetX, sceneOffsetY + height1 + currheigt/2, currwidth, currheigt);
-    ui->pushButton_exit_menu->setStyleSheet("QPushButton {font: bold " + QString::number(std::max(currwidth/7, 1)) + "px;}");
+    ui->pushButton_exit_menu->setStyleSheet("QPushButton {font: bold;}");
     ui->pushButton_reset->setGeometry(sceneOffsetX + std::min(width1, height1) - currwidth, sceneOffsetY + height1 + currheigt/2, currwidth, currheigt);
-    ui->pushButton_reset->setStyleSheet("QPushButton {font: bold " + QString::number(std::max(currwidth/7, 1)) + "px;}");
+    ui->pushButton_reset->setStyleSheet("QPushButton {font: bold;}");
 }
 
 fiveWins::~fiveWins()
