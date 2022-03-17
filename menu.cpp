@@ -24,7 +24,7 @@ menu::menu(fiveWins *gameWidget, QWidget *parent)
     ui->pushButton_local2Player->setStyleSheet(cssGreen);
     ui->pushButton_createServer->setStyleSheet(cssGreen);
     ui->pushButton_joinServer->setStyleSheet(cssGreen);
-    ui->pushButton_exit->setStyleSheet("QPushButton { background-color: rgb(201,44,44); border-style: double; border-width: 10px; border-radius: 10px; border-color: rgb(180,44,44); font: bold " + QString::number(width/10/14) + "px; min-width: 10em; } QPushButton:hover {border-color: rgb(100,44,44)}");
+    ui->pushButton_exit->setStyleSheet("QPushButton { background-color: rgb(201,44,44); border-style: double; border-width: 10px; border-radius: 10px; border-color: rgb(180,44,44); font: bold; min-width: 10em; } QPushButton:hover {border-color: rgb(100,44,44)}");
 
     this->gameWidget = gameWidget;
     this->gameWidget->setMenu(this);
