@@ -4,6 +4,7 @@
 #include <QEvent>
 #include <QMouseEvent>
 #include <iostream>
+#include <QScreen>
 
 fiveWins::fiveWins(QWidget *parent)
     : QWidget(parent)

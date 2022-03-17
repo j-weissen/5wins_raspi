@@ -76,6 +76,11 @@
      <height>28</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>5</pointsize>
+    </font>
+   </property>
    <property name="text">
     <string>Reset</string>
    </property>
@@ -94,6 +99,11 @@
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>5</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>Exit to Menu</string>
