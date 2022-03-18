@@ -79,8 +79,6 @@ bool fiveWins::eventFilter(QObject *watched, QEvent *event)
         QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
         if (mouseEvent->button() == Qt::LeftButton && game->currPlayer->type == TYPE_HUMAN && !game->getWin() && !game->getTie()){
             QPoint currClick = ui->graphicsView->mapFromGlobal(mouseEvent->pos());
-            //int x = (mouseEvent->position().x() - sceneOffsetX)/CellGUI::getSize();
-            //int y = (mouseEvent->position().y() - sceneOffsetY)/CellGUI::getSize();
             int x = currClick.x()/CellGUI::getSize();
             int y = currClick.y()/CellGUI::getSize();
 
@@ -100,9 +98,11 @@ bool fiveWins::eventFilter(QObject *watched, QEvent *event)
                         brumm->stackBefore(io);
                     }
                     io->show();
+                    ui->pushButton_undo->hide();
                     ui->pushButton_reset->show();
                 }else if (game->getTie()){
                     ui->message->setText("Es ist ein Unentschieden");
+                    ui->pushButton_undo->hide();
                     ui->pushButton_reset->show();
                 }
 
@@ -138,6 +138,8 @@ void fiveWins::resetGame()
     playedGames++;
 
     ui->message->setText("Gespielte Spiele: " + QString::number(playedGames));
+    ui->pushButton_reset->hide();
+    ui->pushButton_undo->show();
 }
 
 void fiveWins::setMenu(QWidget *m)
