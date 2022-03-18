@@ -3,6 +3,7 @@
 #include "QDir"
 
 
+
 menu::menu(fiveWins *gameWidget, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::menu)
@@ -38,11 +39,20 @@ menu::menu(fiveWins *gameWidget, QWidget *parent)
 
     this->gameWidget = gameWidget;
     this->gameWidget->setMenu(this);
+    socket = gameWidget->getSocket();
+
+    server = new NetworkTcpServer(fiveWins::messageSeparator, fiveWins::port);
+    client = new NetworkTcpClient(fiveWins::messageSeparator, fiveWins::port);
+
+    QObject::connect(client, &NetworkTcpClient::connected, this, &menu::onConnected);
+    QObject::connect(server, &NetworkTcpServer::connected, this, &menu::onConnected);
 }
 
 menu::~menu()
 {
     delete ui;
+    delete server;
+    delete client;
 }
 
 void menu::on_pushButton_exit_clicked()
@@ -57,4 +67,24 @@ void menu::on_pushButton_local2Player_clicked()
     }
     gameWidget->showFullScreen();
     this->close();
+}
+
+void menu::on_pushButton_createServer_clicked()
+{
+    QString address = server->startListening();
+    ui->label_serverIp->setText(address);
+    socket = server;
+}
+
+
+void menu::on_pushButton_joinServer_clicked()
+{
+    QHostAddress ip = QHostAddress(ui->lineEdit_ip->text());
+    client->setAddr(ip);
+    client->connectToServer();
+    socket = client;
+}
+
+void menu::onConnected() {
+    ui->label_5wins->setText("con");
 }

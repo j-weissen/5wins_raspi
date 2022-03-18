@@ -4,6 +4,13 @@
 #include <QEvent>
 #include <QMouseEvent>
 #include <iostream>
+#include "network/NetworkTcpClient.h"
+#include "network/NetworkTcpServer.h"
+#include "network/dataRecievedEvent.h"
+
+QString fiveWins::messageSeparator = "#";
+QString fiveWins::textSeparator = ";";
+int fiveWins::port = 12345;
 
 fiveWins::fiveWins(QWidget *parent)
     : QWidget(parent)
@@ -34,9 +41,23 @@ fiveWins::fiveWins(QWidget *parent)
 
     game = new Game(SYMBOL_X, TYPE_HUMAN, TYPE_HUMAN, ui->label_turn, scene);
 
+    socket = nullptr;
+
+
     qApp->installEventFilter(this);
+
+//    DataRecievedEvent *dre = new DataRecievedEvent(1337, 0);
+//    QApplication::sendEvent(this, dre);
 }
 
+
+// TODO connect(socket, &Network::dataRecieved, this, &fiveWins::onDataRecieved)
+/* TODO: instanciate Game dependong on game type
+void fiveWins::setupGame(playerType playerX, playerType playerO) {
+
+    game = new Game(SYMBOL_X, playerX, playerO, ui->label_turn, scene);
+}
+*/
 Game* fiveWins::getGame()
 {
     return game;
@@ -87,6 +108,14 @@ fiveWins::~fiveWins()
 
 bool fiveWins::eventFilter(QObject *watched, QEvent *event)
 {
+    // TODO: Handling Event based on player type
+    if (event->type() == DataRecievedEvent::getEventType()) {
+        DataRecievedEvent *dre = static_cast<DataRecievedEvent *>(event);
+        qDebug() << "x: " << QString::number(dre->getX());
+        game->inputHuman(dre->getX(), dre->getY());
+
+    }
+
     if (!this->isHidden() && this->isActiveWindow() && event->type() == QEvent::MouseButtonPress){
         QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
         if (mouseEvent->button() == Qt::LeftButton && game->currPlayer->type == TYPE_HUMAN && !game->getWin() && !game->getTie()){
@@ -96,6 +125,9 @@ bool fiveWins::eventFilter(QObject *watched, QEvent *event)
             if (Field::inArea(x, y) && game->field->area[Field::accessArr2D(x, y)]->state == SYMBOL_FREE){ //click is in the field
                 game->field->area[Field::accessArr2D(x, y)]->clicked();
                 game->inputHuman(x, y);
+
+                QString encoded = QString::number(x) + QString::number(y);
+                socket->send(encoded);
 
                 if (game->getWin()){
                     QString out = "Spieler ";
@@ -167,4 +199,18 @@ void fiveWins::on_pushButton_exit_menu_clicked()
     m->show();
     this->close();
 }
+
+void fiveWins::onDataRecieved() {
+    QString data = socket->getRecvData();
+    int x = data.split(textSeparator)[0].toInt();
+    int y = data.split(textSeparator)[1].toInt();
+    DataRecievedEvent *dre = new DataRecievedEvent(x, y);
+    QApplication::sendEvent(this, dre);
+}
+
+Network *fiveWins::getSocket() {
+    return socket;
+}
+
+
 

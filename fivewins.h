@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QGraphicsScene>
 #include "game.h"
+#include "network/Network.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class fiveWins; }
@@ -14,13 +15,17 @@ class fiveWins : public QWidget
     Q_OBJECT
 
 public:
+    QString static messageSeparator;
+    QString static textSeparator;
+    int static port;
     fiveWins(QWidget *parent = nullptr);
     Game* getGame();
-
     void setupGui();
-
     void resetGame();
     void setMenu(QWidget *m);
+
+    Network *getSocket();
+
     ~fiveWins();
 
 public slots:
@@ -32,6 +37,8 @@ private slots:
 
     void on_pushButton_exit_menu_clicked();
 
+    void onDataRecieved();
+
 private:
     int playedGames;
     Ui::fiveWins *ui;
@@ -40,5 +47,6 @@ private:
     Game *game;
     QWidget *m;
     int sceneOffsetX, sceneOffsetY;
+    Network *socket;
 };
 #endif // FIVEWINS_H
