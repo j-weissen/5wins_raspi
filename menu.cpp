@@ -1,7 +1,7 @@
 #include "menu.h"
 #include "ui_menu.h"
 #include "QDir"
-
+#include <QScreen>
 
 menu::menu(fiveWins *gameWidget, QWidget *parent)
     : QWidget(parent)

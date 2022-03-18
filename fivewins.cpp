@@ -4,6 +4,8 @@
 #include <QEvent>
 #include <QMouseEvent>
 #include <iostream>
+#include <QScreen>
+#include <QSizePolicy>
 
 fiveWins::fiveWins(QWidget *parent)
     : QWidget(parent)
@@ -44,38 +46,24 @@ Game* fiveWins::getGame()
 
 void fiveWins::setupGui(){
     QRect scr = qApp->primaryScreen()->geometry();
-    int height1 = scr.height();
-    int width1 = scr.width();
-    int currheigt, currwidth;
+    setFixedSize(scr.width(), scr.height());
 
-    setFixedSize(width1, height1);
+    this->show();
 
-    sceneOffsetX = width1 / 20;
-    sceneOffsetY = height1 / 20;
+    int height1 = ui->graphicsView->height();
+    int width1 = ui->graphicsView->width();
+    int maxSize;
+    QPoint uiCords = ui->graphicsView->mapToGlobal(ui->graphicsView->pos());
 
-    width1 -= 2*sceneOffsetX;
-    height1 -= 2*sceneOffsetY;
+    this->hide();
 
+    sceneOffsetX = uiCords.x();
+    sceneOffsetY = uiCords.y();
 
-    currwidth = std::min(height1, width1);
-    currheigt = currwidth;
-    CellGUI::setSize(currwidth/15);
-
-    sceneOffsetX += width1/2 - currwidth/2;
-    ui->graphicsView->setGeometry(sceneOffsetX, sceneOffsetY, currwidth, currheigt);
-
-    currheigt = sceneOffsetY;
-    ui->label_turn->setGeometry(sceneOffsetX, sceneOffsetY/10, currwidth, currheigt);
-
-    currheigt = sceneOffsetY;
-    ui->message->setGeometry(sceneOffsetX, sceneOffsetY + height1, currwidth, currheigt);
-
-    currheigt = sceneOffsetY - height()/40;
-    currwidth = width()/18;
-    ui->pushButton_exit_menu->setGeometry(sceneOffsetX, sceneOffsetY + height1 + currheigt/2, currwidth, currheigt);
-    ui->pushButton_exit_menu->setStyleSheet("QPushButton {font: bold;}");
-    ui->pushButton_reset->setGeometry(sceneOffsetX + std::min(width1, height1) - currwidth, sceneOffsetY + height1 + currheigt/2, currwidth, currheigt);
-    ui->pushButton_reset->setStyleSheet("QPushButton {font: bold;}");
+    maxSize = std::min(height1, width1);
+    ui->graphicsView->setFixedHeight(maxSize);
+    ui->graphicsView->setFixedWidth(maxSize);
+    CellGUI::setSize(maxSize/15);
 }
 
 fiveWins::~fiveWins()
@@ -90,8 +78,11 @@ bool fiveWins::eventFilter(QObject *watched, QEvent *event)
     if (!this->isHidden() && this->isActiveWindow() && event->type() == QEvent::MouseButtonPress){
         QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
         if (mouseEvent->button() == Qt::LeftButton && game->currPlayer->type == TYPE_HUMAN && !game->getWin() && !game->getTie()){
-            int x = (mouseEvent->position().x() - sceneOffsetX)/CellGUI::getSize();
-            int y = (mouseEvent->position().y() - sceneOffsetY)/CellGUI::getSize();
+            QPoint currClick = ui->graphicsView->mapFromGlobal(mouseEvent->pos());
+            //int x = (mouseEvent->position().x() - sceneOffsetX)/CellGUI::getSize();
+            //int y = (mouseEvent->position().y() - sceneOffsetY)/CellGUI::getSize();
+            int x = currClick.x()/CellGUI::getSize();
+            int y = currClick.y()/CellGUI::getSize();
 
             if (Field::inArea(x, y) && game->field->area[Field::accessArr2D(x, y)]->state == SYMBOL_FREE){ //click is in the field
                 game->field->area[Field::accessArr2D(x, y)]->clicked();
