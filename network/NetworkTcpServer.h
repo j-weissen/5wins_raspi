@@ -7,7 +7,7 @@ class NetworkTcpServer : public Network
 {
     Q_OBJECT
 public:
-    NetworkTcpServer(QString separator, int port);
+    NetworkTcpServer(QString separator);
     ~NetworkTcpServer();
 
     QString startListening();

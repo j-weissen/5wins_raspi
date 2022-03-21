@@ -10,7 +10,7 @@
 
 QString fiveWins::messageSeparator = "#";
 QString fiveWins::textSeparator = ";";
-int fiveWins::port = 12345;
+
 
 fiveWins::fiveWins(QWidget *parent)
     : QWidget(parent)
@@ -39,31 +39,34 @@ fiveWins::fiveWins(QWidget *parent)
 
     ui->graphicsView->setScene(scene);
 
-    game = new Game(SYMBOL_X, TYPE_HUMAN, TYPE_HUMAN, ui->label_turn, scene);
-
     socket = nullptr;
+    isServer = false;
 
+    game = nullptr;
 
     qApp->installEventFilter(this);
-
-//    DataRecievedEvent *dre = new DataRecievedEvent(1337, 0);
-//    QApplication::sendEvent(this, dre);
 }
 
 
-// TODO connect(socket, &Network::dataRecieved, this, &fiveWins::onDataRecieved)
-/* TODO: instanciate Game dependong on game type
-void fiveWins::setupGame(playerType playerX, playerType playerO) {
+void fiveWins::postMenuInit() {
+    if (socket == nullptr) {
+        game = new Game(SYMBOL_X, TYPE_HUMAN, TYPE_HUMAN, ui->label_turn, scene);
+    } else if (isServer) {
+        game = new Game(SYMBOL_X, TYPE_REMOTE, TYPE_HUMAN, ui->label_turn, scene);
+        connect(socket, &Network::dataRecieved, this, &fiveWins::onDataRecieved);
+    } else {
+        game = new Game(SYMBOL_X, TYPE_HUMAN, TYPE_REMOTE, ui->label_turn, scene);
+        connect(socket, &Network::dataRecieved, this, &fiveWins::onDataRecieved);
+    }
 
-    game = new Game(SYMBOL_X, playerX, playerO, ui->label_turn, scene);
 }
-*/
+
 Game* fiveWins::getGame()
 {
     return game;
 }
 
-void fiveWins::setupGui(){
+void fiveWins::setupGui() {
     QRect scr = qApp->primaryScreen()->geometry();
     int height1 = scr.height();
     int width1 = scr.width();
@@ -108,69 +111,84 @@ fiveWins::~fiveWins()
 
 bool fiveWins::eventFilter(QObject *watched, QEvent *event)
 {
-    // TODO: Handling Event based on player type
-    if (event->type() == DataRecievedEvent::getEventType()) {
-        DataRecievedEvent *dre = static_cast<DataRecievedEvent *>(event);
-        qDebug() << "x: " << QString::number(dre->getX());
-        game->inputHuman(dre->getX(), dre->getY());
+    if (event->type() == QEvent::MouseButtonPress || event->type() == DataRecievedEvent::getEventType()) {
+        if (game != nullptr && !game->getWin() && !game->getTie()){
+            int x, y;
+            bool initialized = false;
 
-    }
+            if (event->type() == DataRecievedEvent::getEventType()) { //debug
+                DataRecievedEvent *dre = static_cast<DataRecievedEvent *>(event);
+                qDebug() << "Type: " << game->currPlayer->type << "\t" << "x: " << dre->getX() << ", y: " << dre->getY();
+            }
 
-    if (!this->isHidden() && this->isActiveWindow() && event->type() == QEvent::MouseButtonPress){
-        QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
-        if (mouseEvent->button() == Qt::LeftButton && game->currPlayer->type == TYPE_HUMAN && !game->getWin() && !game->getTie()){
-            int x = (mouseEvent->position().x() - sceneOffsetX)/CellGUI::getSize();
-            int y = (mouseEvent->position().y() - sceneOffsetY)/CellGUI::getSize();
+            if (game->currPlayer->type == TYPE_REMOTE && event->type() == DataRecievedEvent::getEventType()) {
+                DataRecievedEvent *dre = static_cast<DataRecievedEvent *>(event);
+                x = dre->getX();
+                y = dre->getY();
+                initialized = true;
+            }
 
-            if (Field::inArea(x, y) && game->field->area[Field::accessArr2D(x, y)]->state == SYMBOL_FREE){ //click is in the field
-                game->field->area[Field::accessArr2D(x, y)]->clicked();
-                game->inputHuman(x, y);
-
-                QString encoded = QString::number(x) + QString::number(y);
-                socket->send(encoded);
-
-                if (game->getWin()){
-                    QString out = "Spieler ";
-                    out.append(game->currPlayer->toChar());
-                    out += " hat gewonnen!";
-
-                    ui->message->setText(out);
-
-                    io->setPlainText(out);
-                    for (auto brumm : game->field->area){
-                        brumm->stackBefore(io);
-                    }
-                    io->show();
-                    ui->pushButton_reset->show();
-                }else if (game->getTie()){
-                    ui->message->setText("Es ist ein Unentschieden");
-                    ui->pushButton_reset->show();
-                }
-
-
-            }else { //out of field
-                if (event->type() == QEvent::Quit){
-                    resetGame();
-                    m->show();
-                    this->close();
-                    return true;
-                }else{
-                    return QObject::eventFilter(watched, event);
+            if (game->currPlayer->type == TYPE_HUMAN && !this->isHidden() && this->isActiveWindow() && event->type() == QEvent::MouseButtonPress) {
+                QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
+                if (mouseEvent->button() == Qt::LeftButton) {
+                    x = (mouseEvent->position().x() - sceneOffsetX)/CellGUI::getSize();
+                    y = (mouseEvent->position().y() - sceneOffsetY)/CellGUI::getSize();
+                    initialized = true;
                 }
             }
 
-        }else if (mouseEvent->button() == Qt::LeftButton && (game->getWin() || game->getTie())){
-            return QObject::eventFilter(watched, event);
+
+            if (initialized) {
+                if (Field::inArea(x, y)) { // in Field
+                    if (game->field->area[Field::accessArr2D(x, y)]->state == SYMBOL_FREE) {
+
+                        game->field->area[Field::accessArr2D(x, y)]->clicked();
+                        game->inputHuman(x, y);
+
+                        if (game->currPlayer->type == TYPE_REMOTE) { // inverted, bc player is switched in game.inputHuman()
+                            QString encoded = QString::number(x) + ";" + QString::number(y);
+                            socket->send(encoded);
+                        }
+
+                        if (game->getWin()){
+                            QString out = "Spieler ";
+                            out.append(game->currPlayer->toChar());
+                            out += " hat gewonnen!";
+
+                            ui->message->setText(out);
+
+                            io->setPlainText(out);
+                            for (auto brumm : game->field->area){
+                                brumm->stackBefore(io);
+                            }
+                            io->show();
+                            ui->pushButton_reset->show();
+                        } else if (game->getTie()){
+                            ui->message->setText("Es ist ein Unentschieden");
+                            ui->pushButton_reset->show();
+                        }
+
+
+                    }
+                } else { //out of field
+                    if (event->type() == QEvent::Quit){
+                        resetGame();
+                        m->show();
+                        this->close();
+                        return true;
+                    }
+                }
+            }
         }
-        return true;
     }
     return QObject::eventFilter(watched, event);
 }
 
+
 void fiveWins::resetGame()
 {
     delete game;
-    game = new Game(SYMBOL_X, TYPE_HUMAN, TYPE_HUMAN, ui->label_turn, scene);
+    postMenuInit();
     CellGUI::curr = 0;
 
     ui->label_turn->setText(game->currPlayer->getOutput());
@@ -212,5 +230,10 @@ Network *fiveWins::getSocket() {
     return socket;
 }
 
+void fiveWins::setSocket(Network *socket) {
+    this->socket = socket;
+}
 
-
+void fiveWins::setIsServer(bool isServer) {
+    this->isServer = isServer;
+}

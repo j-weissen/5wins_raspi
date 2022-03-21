@@ -10,7 +10,7 @@
 class Network : public QObject {
     Q_OBJECT
 public:
-    Network(QString separator, int port);
+    Network(QString separator);
     ~Network();
 
     void send(QString sendData);

@@ -7,7 +7,7 @@ class NetworkTcpClient : public Network
 {
     Q_OBJECT
 public:
-    NetworkTcpClient(QString separator, int port);
+    NetworkTcpClient(QString separator);
     ~NetworkTcpClient();
 
     void connectToServer();

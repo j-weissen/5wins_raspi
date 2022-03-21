@@ -2,8 +2,7 @@
 using namespace std;
 #include <QTimer>
 
-Network::Network(QString separator, int port) {
-    this->setPort(port);
+Network::Network(QString separator) {
     this->separator = separator.toUtf8().toBase64();
     incomingData.clear();
 }
@@ -13,14 +12,15 @@ Network::~Network() {
 }
 
 bool Network::setPort(quint16 port) {
-    bool rv = false;
+    PORT = port;
+    /*bool rv = false;
     QTcpServer portTestServer;
     if (portTestServer.listen(QHostAddress::Any, port)) {
         portTestServer.close();
         PORT = port;
         rv = true;
-    }
-    return rv;
+    }*/
+    return true;
 }
 
 

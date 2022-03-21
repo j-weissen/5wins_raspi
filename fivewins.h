@@ -17,14 +17,19 @@ class fiveWins : public QWidget
 public:
     QString static messageSeparator;
     QString static textSeparator;
-    int static port;
+    static constexpr int serverPort = 12345;
+    static constexpr int clientPort = 12347;
     fiveWins(QWidget *parent = nullptr);
     Game* getGame();
     void setupGui();
     void resetGame();
     void setMenu(QWidget *m);
+    void postMenuInit();
 
     Network *getSocket();
+    void setSocket(Network *socket);
+
+    void setIsServer(bool isServer);
 
     ~fiveWins();
 
@@ -48,5 +53,6 @@ private:
     QWidget *m;
     int sceneOffsetX, sceneOffsetY;
     Network *socket;
+    bool isServer;
 };
 #endif // FIVEWINS_H

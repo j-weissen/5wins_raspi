@@ -1,6 +1,6 @@
 #include "NetworkTcpClient.h"
 
-NetworkTcpClient::NetworkTcpClient(QString separator, int port) : Network(separator, port) {
+NetworkTcpClient::NetworkTcpClient(QString separator) : Network(separator) {
     socket = new QTcpSocket;
     _addr = new QHostAddress;
     QObject::connect(socket, &QAbstractSocket::readyRead, this, &Network::recv);

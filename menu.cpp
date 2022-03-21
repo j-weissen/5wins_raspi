@@ -41,8 +41,8 @@ menu::menu(fiveWins *gameWidget, QWidget *parent)
     this->gameWidget->setMenu(this);
     socket = gameWidget->getSocket();
 
-    server = new NetworkTcpServer(fiveWins::messageSeparator, fiveWins::port);
-    client = new NetworkTcpClient(fiveWins::messageSeparator, fiveWins::port);
+    server = new NetworkTcpServer(fiveWins::messageSeparator);
+    client = new NetworkTcpClient(fiveWins::messageSeparator);
 
     QObject::connect(client, &NetworkTcpClient::connected, this, &menu::onConnected);
     QObject::connect(server, &NetworkTcpServer::connected, this, &menu::onConnected);
@@ -60,8 +60,11 @@ void menu::on_pushButton_exit_clicked()
     qApp->quit();
 }
 
+
+
 void menu::on_pushButton_local2Player_clicked()
 {
+    gameWidget->postMenuInit();
     if (gameWidget->getGame()->getTie() || gameWidget->getGame()->getWin()){
         gameWidget->resetGame();
     }
@@ -73,18 +76,22 @@ void menu::on_pushButton_createServer_clicked()
 {
     QString address = server->startListening();
     ui->label_serverIp->setText(address);
-    socket = server;
+    gameWidget->setSocket(server);
+    gameWidget->setIsServer(true);
+
 }
 
 
 void menu::on_pushButton_joinServer_clicked()
 {
-    QHostAddress ip = QHostAddress(ui->lineEdit_ip->text());
-    client->setAddr(ip);
+    //QHostAddress ip = QHostAddress(ui->lineEdit_ip->text().split(":")[0]);
+    int port = ui->lineEdit_ip->text().toInt();
+    client->setPort(port);
+    client->setAddr(QHostAddress("127.0.0.1"));
     client->connectToServer();
-    socket = client;
+    gameWidget->setSocket(client);
 }
 
 void menu::onConnected() {
-    ui->label_5wins->setText("con");
+    on_pushButton_local2Player_clicked();
 }

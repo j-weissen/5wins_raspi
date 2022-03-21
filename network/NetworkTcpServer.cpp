@@ -3,7 +3,7 @@
 using namespace std;
 
 
-NetworkTcpServer::NetworkTcpServer(QString separator, int port) : Network(separator, port) {
+NetworkTcpServer::NetworkTcpServer(QString separator) : Network(separator) {
     server = new QTcpServer(this);
     QObject::connect(server, &QTcpServer::newConnection, this, &NetworkTcpServer::acceptConnection);
 }
