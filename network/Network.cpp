@@ -50,9 +50,12 @@ void Network::recv() {
         } else {
             int bytes = incomingData.indexOf(separator);               // Find the end of message
             recvData = incomingData.left(bytes);
-            incomingData = rmvSeparator(incomingData.mid(bytes));                    // Keep the data read too early
+            incomingData = rmvSeparator(incomingData.mid(bytes));      // Keep the data read too early
             emit dataRecieved();
         }
     }
 }
 
+void Network::close() {
+    socket->close();
+}

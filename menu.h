@@ -17,6 +17,7 @@ class menu : public QWidget
 
 public:
     menu(fiveWins *gameWidget, QWidget *parent = nullptr);
+
     ~menu();
 
 private slots:
@@ -37,5 +38,9 @@ private:
     Network *socket;
     NetworkTcpServer *server;
     NetworkTcpClient *client;
+    void startGame();
+
+private slots:
+    void initNetwork();
 };
 #endif // MENU_H

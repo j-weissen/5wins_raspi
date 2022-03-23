@@ -39,13 +39,9 @@ menu::menu(fiveWins *gameWidget, QWidget *parent)
 
     this->gameWidget = gameWidget;
     this->gameWidget->setMenu(this);
-    socket = gameWidget->getSocket();
 
-    server = new NetworkTcpServer(fiveWins::messageSeparator);
-    client = new NetworkTcpClient(fiveWins::messageSeparator);
-
-    QObject::connect(client, &NetworkTcpClient::connected, this, &menu::onConnected);
-    QObject::connect(server, &NetworkTcpServer::connected, this, &menu::onConnected);
+    connect(gameWidget, &fiveWins::resetSockets, this, &menu::initNetwork);
+    initNetwork();
 }
 
 menu::~menu()
@@ -53,6 +49,16 @@ menu::~menu()
     delete ui;
     delete server;
     delete client;
+}
+
+void menu::initNetwork() {
+    server = new NetworkTcpServer(fiveWins::messageSeparator);
+    client = new NetworkTcpClient(fiveWins::messageSeparator);
+
+    QObject::connect(client, &NetworkTcpClient::connected, this, &menu::onConnected);
+    QObject::connect(server, &NetworkTcpServer::connected, this, &menu::onConnected);
+
+    ui->label_serverIp->clear();
 }
 
 void menu::on_pushButton_exit_clicked()
@@ -64,34 +70,45 @@ void menu::on_pushButton_exit_clicked()
 
 void menu::on_pushButton_local2Player_clicked()
 {
-    gameWidget->postMenuInit();
+    gameWidget->setSocket(nullptr);
+    startGame();
+}
+
+void menu::startGame() {
+    gameWidget->initGame();
     if (gameWidget->getGame()->getTie() || gameWidget->getGame()->getWin()){
-        gameWidget->resetGame();
+        gameWidget->endGame();
     }
     gameWidget->showFullScreen();
     this->close();
 }
 
-void menu::on_pushButton_createServer_clicked()
-{
-    QString address = server->startListening();
-    ui->label_serverIp->setText(address);
-    gameWidget->setSocket(server);
-    gameWidget->setIsServer(true);
+void menu::on_pushButton_createServer_clicked() {
+    if (!server->isListening()) {
+        gameWidget->setIsServer(true);
 
+        QString address = server->startListening();
+        ui->label_serverIp->setText(address);
+
+        gameWidget->setSocket(server);
+    }
 }
 
 
-void menu::on_pushButton_joinServer_clicked()
-{
-    //QHostAddress ip = QHostAddress(ui->lineEdit_ip->text().split(":")[0]);
-    int port = ui->lineEdit_ip->text().toInt();
-    client->setPort(port);
-    client->setAddr(QHostAddress("127.0.0.1"));
-    client->connectToServer();
-    gameWidget->setSocket(client);
+void menu::on_pushButton_joinServer_clicked() {
+    if (ui->lineEdit_ip->text().split(":").length() == 2) {
+        gameWidget->setIsServer(false);
+
+        QHostAddress ip = QHostAddress(ui->lineEdit_ip->text().split(":")[0]);
+        int port = ui->lineEdit_ip->text().split(":")[1].toInt();
+        client->setPort(port);
+        client->setAddr(ip);
+        client->connectToServer();
+
+        gameWidget->setSocket(client);
+    }
 }
 
 void menu::onConnected() {
-    on_pushButton_local2Player_clicked();
+    startGame();
 }
