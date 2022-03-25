@@ -4,6 +4,7 @@
 #include <QScreen>
 
 
+
 menu::menu(fiveWins *gameWidget, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::menu)
@@ -24,10 +25,11 @@ menu::menu(fiveWins *gameWidget, QWidget *parent)
 
     //PushButton CSS for Menu
     QString cssGreen = "QPushButton { background-color: rgb(89,201,38); border-style: double; border-width: 10px; border-radius: 10px; border-color: rgb(38,201,69); font: bold; min-width: 10em; } QPushButton:hover {border-color: rgb(38,131,69)}";
+    QString cssRed = "QPushButton { background-color: rgb(201,44,44); border-style: double; border-width: 10px; border-radius: 10px; border-color: rgb(180,44,44); font: bold; min-width: 10em; } QPushButton:hover {border-color: rgb(100,44,44)}";
     ui->pushButton_local2Player->setStyleSheet(cssGreen);
     ui->pushButton_createServer->setStyleSheet(cssGreen);
     ui->pushButton_joinServer->setStyleSheet(cssGreen);
-    ui->pushButton_exit->setStyleSheet("QPushButton { background-color: rgb(201,44,44); border-style: double; border-width: 10px; border-radius: 10px; border-color: rgb(180,44,44); font: bold; min-width: 10em; } QPushButton:hover {border-color: rgb(100,44,44)}");
+    ui->pushButton_exit->setStyleSheet(cssRed);
 
     this->gameWidget = gameWidget;
     this->gameWidget->setMenu(this);
