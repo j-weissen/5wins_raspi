@@ -148,24 +148,25 @@ bool fiveWins::eventFilter(QObject *watched, QEvent *event)
 
                         ui->message->setText(out);
 
-                    io->setPlainText(out);
-                    for (auto brumm : game->field->area){
-                        brumm->stackBefore(io);
+                        io->setPlainText(out);
+                        for (auto brumm : game->field->area){
+                            brumm->stackBefore(io);
+                        }
+                        io->show();
+                        ui->pushButton_undo->hide();
+                        ui->pushButton_reset->show();
+                    }else if (game->getTie()){
+                        ui->message->setText("Es ist ein Unentschieden");
+                        ui->pushButton_undo->hide();
+                        ui->pushButton_reset->show();
                     }
-                    io->show();
-                    ui->pushButton_undo->hide();
-                    ui->pushButton_reset->show();
-                }else if (game->getTie()){
-                    ui->message->setText("Es ist ein Unentschieden");
-                    ui->pushButton_undo->hide();
-                    ui->pushButton_reset->show();
-                }
-            } else { //out of field
-                if (event->type() == QEvent::Quit){
-                    endGame();
-                    m->show();
-                    this->close();
-                    return true;
+                } else { //out of field
+                    if (event->type() == QEvent::Quit){
+                        endGame();
+                        m->show();
+                        this->close();
+                        return true;
+                    }
                 }
             }
         }
@@ -174,7 +175,7 @@ bool fiveWins::eventFilter(QObject *watched, QEvent *event)
 }
 
 
-void fiveWins::endGame()
+void fiveWins::endGame ()
 {
     delete game;
     game = nullptr;

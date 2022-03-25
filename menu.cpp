@@ -9,6 +9,8 @@ menu::menu(fiveWins *gameWidget, QWidget *parent)
     , ui(new Ui::menu)
 {
     ui->setupUi(this);
+    ui->label_serverIp->hide();
+    ui->lineEdit_ip->hide();
     QWidget::showFullScreen();
 
     //Get Screen Size/Resolution
@@ -75,6 +77,8 @@ void menu::startGame() {
 
 void menu::on_pushButton_createServer_clicked() {
     if (!server->isListening()) {
+        ui->pushButton_joinServer->hide();
+        ui->label_serverIp->show();
         gameWidget->setIsServer(true);
 
         QString address = server->startListening();
@@ -96,6 +100,15 @@ void menu::on_pushButton_joinServer_clicked() {
         client->connectToServer();
 
         gameWidget->setSocket(client);
+    }else{
+        if (ui->pushButton_createServer->isVisible()) {
+            ui->pushButton_createServer->hide();
+            ui->lineEdit_ip->show();
+        }else {
+            ui->pushButton_createServer->show();
+            ui->lineEdit_ip->hide();
+        }
+
     }
 }
 
