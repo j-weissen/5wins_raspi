@@ -127,8 +127,9 @@ bool fiveWins::eventFilter(QObject *watched, QEvent *event)
         }
 
         if (game != nullptr && !game->getWin() && !game->getTie()){
-            if (game->currPlayer->type == TYPE_HUMAN && !this->isHidden() && this->isActiveWindow() && event->type() == QEvent::MouseButtonPress) {
+            if (game->currPlayer->type == TYPE_HUMAN && !this->isHidden() && this->isActiveWindow() && event->type() == QEvent::MouseButtonPress && std::strcmp(watched->metaObject()->className(), "fiveWins") == 0) {
                 QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
+
                 if (mouseEvent->button() == Qt::LeftButton) {
                     QPoint currClick = ui->graphicsView->mapFromGlobal(mouseEvent->pos());
                     x = currClick.x()/CellGUI::getSize();
@@ -143,7 +144,9 @@ bool fiveWins::eventFilter(QObject *watched, QEvent *event)
             if (Field::inArea(x, y)) { // in Field
                 if (game->field->area[Field::accessArr2D(x, y)]->state == SYMBOL_FREE) {
 
-                    socket->send(encodeTurn(x, y));
+                    if (game->currPlayer->type == TYPE_HUMAN && sendUpdates()) {
+                       socket->send(encodeTurn(x, y));
+                    }
 
                     game->field->area[Field::accessArr2D(x, y)]->clicked();
                     game->inputHuman(x, y);
@@ -204,7 +207,9 @@ void fiveWins::setMenu(QWidget *m)
 
 void fiveWins::on_pushButton_reset_clicked()
 {
-    socket->send(encodeAction(DataRecievedEvent::ACTION_RESET));
+    if (sendUpdates()) {
+        socket->send(encodeAction(DataRecievedEvent::ACTION_RESET));
+    }
     reset();
 }
 
@@ -216,19 +221,19 @@ void fiveWins::reset() {
 
 void fiveWins::on_pushButton_exit_menu_clicked()
 {
-    socket->send(encodeAction(DataRecievedEvent::ACTION_EXIT));
+    if (sendUpdates()) {
+        socket->send(encodeAction(DataRecievedEvent::ACTION_EXIT));
+    }
     exit();
 }
 
-void fiveWins::remoteOriginExit() {
-    socket->close();
-    exit();
-}
 
 void fiveWins::exit() {
     endGame();
     m->show();
-    socket->close();
+    if (socket != nullptr) {
+        socket->close();
+    }
     socket = nullptr;
     emit resetSockets();
     this->close();
@@ -250,6 +255,10 @@ DataRecievedEvent* fiveWins::decodeDataToEvent(QString data) {
         rv = new DataRecievedEvent(action);
     }
     return rv;
+}
+
+bool fiveWins::sendUpdates() {
+    return (game->currPlayer->type == TYPE_REMOTE || game->getOtherPlayerType() == TYPE_REMOTE);
 }
 
 QString fiveWins::encodeTurn(int x, int y) {

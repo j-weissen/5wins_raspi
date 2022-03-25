@@ -61,7 +61,7 @@ private:
     DataRecievedEvent* decodeDataToEvent(QString data);
     void exit();
     void reset();
-    void remoteOriginExit();
+    bool sendUpdates();
 
 signals:
     void resetSockets();

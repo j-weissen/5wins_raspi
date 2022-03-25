@@ -50,6 +50,14 @@ void Game::inputHuman(int x, int y) {
 
 }
 
+playerType Game::getOtherPlayerType() {
+    playerType rv;
+    switchCurrPlayer();
+    rv = currPlayer->type;
+    switchCurrPlayer();
+    return rv;
+}
+
 bool Game::getWin()
 {
     return win;

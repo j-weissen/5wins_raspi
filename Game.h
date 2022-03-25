@@ -17,6 +17,7 @@ public:
     bool getWin();
     bool getTie();
     void reset();
+    playerType getOtherPlayerType();
     Game(symbol startPlayer, playerType typePlayerX, playerType typePlayerO, QLabel *message, QGraphicsScene *scene);
     ~Game();
 
