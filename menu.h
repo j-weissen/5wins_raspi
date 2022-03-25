@@ -3,6 +3,9 @@
 
 #include <QWidget>
 #include "fivewins.h"
+#include "network/Network.h"
+#include "network/NetworkTcpClient.h"
+#include "network/NetworkTcpServer.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class menu; }
@@ -14,6 +17,7 @@ class menu : public QWidget
 
 public:
     menu(fiveWins *gameWidget, QWidget *parent = nullptr);
+
     ~menu();
 
 private slots:
@@ -22,8 +26,21 @@ private slots:
     void on_pushButton_local2Player_clicked();
 
 
+    void on_pushButton_createServer_clicked();
+
+    void on_pushButton_joinServer_clicked();
+
+    void onConnected();
+
 private:
     Ui::menu *ui;
     fiveWins *gameWidget;
+    Network *socket;
+    NetworkTcpServer *server;
+    NetworkTcpClient *client;
+    void startGame();
+
+private slots:
+    void initNetwork();
 };
 #endif // MENU_H

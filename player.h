@@ -5,7 +5,7 @@
 #include <QString>
 
 enum playerType {
-    TYPE_HUMAN, TYPE_AI
+    TYPE_HUMAN, TYPE_AI, TYPE_REMOTE
 };
 
 

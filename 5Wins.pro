@@ -1,4 +1,5 @@
-QT       += core gui
+QT      += core gui
+QT      += network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -12,6 +13,10 @@ SOURCES += \
     main.cpp \
     game.cpp \
     field.cpp \
+    network/Network.cpp \
+    network/NetworkTcpClient.cpp \
+    network/NetworkTcpServer.cpp \
+    network/dataRecievedEvent.cpp \
     player.cpp \
     cell.cpp \
     cell_gui.cpp \
@@ -21,6 +26,10 @@ SOURCES += \
 HEADERS += \
     game.h \
     field.h \
+    network/Network.h \
+    network/NetworkTcpClient.h \
+    network/NetworkTcpServer.h \
+    network/dataRecievedEvent.h \
     player.h \
     cell.h \
     cell_gui.h \

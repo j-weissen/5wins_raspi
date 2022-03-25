@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QGraphicsScene>
 #include "game.h"
+#include "network/Network.h"
+#include "network/dataRecievedEvent.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class fiveWins; }
@@ -14,13 +16,23 @@ class fiveWins : public QWidget
     Q_OBJECT
 
 public:
+    QString static messageSeparator;
+    QString static textSeparator;
+    static constexpr int serverPort = 12345;
+    static constexpr int clientPort = 12347;
     fiveWins(QWidget *parent = nullptr);
     Game* getGame();
-
     void setupGui();
-
-    void resetGame();
+    void endGame();
     void setMenu(QWidget *m);
+    void initGame();
+
+    Network *getSocket();
+    void setSocket(Network *socket);
+
+    void setIsServer(bool isServer);
+    void resetActionOrigin();
+
     ~fiveWins();
 
 public slots:
@@ -32,6 +44,8 @@ private slots:
 
     void on_pushButton_exit_menu_clicked();
 
+    void onDataRecieved();
+
 private:
     int playedGames;
     Ui::fiveWins *ui;
@@ -40,5 +54,16 @@ private:
     Game *game;
     QWidget *m;
     int sceneOffsetX, sceneOffsetY;
+    Network *socket;
+    bool isServer;
+    QString encodeTurn(int x, int y);
+    QString encodeAction(int action);
+    DataRecievedEvent* decodeDataToEvent(QString data);
+    void exit();
+    void reset();
+    void remoteOriginExit();
+
+signals:
+    void resetSockets();
 };
 #endif // FIVEWINS_H
