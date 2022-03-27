@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
-    <height>296</height>
+    <width>776</width>
+    <height>344</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -135,6 +135,9 @@
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
+       </property>
+       <property name="placeholderText">
+        <string>Enter IP:Port</string>
        </property>
       </widget>
      </item>

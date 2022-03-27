@@ -232,13 +232,13 @@ void fiveWins::on_pushButton_exit_menu_clicked()
 
 void fiveWins::exit() {
     endGame();
-    m->show();
     if (socket != nullptr) {
         socket->close();
     }
     socket = nullptr;
     emit resetSockets();
     this->close();
+    m->show();
 }
 
 void fiveWins::onDataRecieved() {
@@ -290,7 +290,7 @@ void fiveWins::on_pushButton_undo_clicked()
 }
 
 void fiveWins::undo(){
-    if (sendUpdates() && game->undo()){
+    if (game->undo() && sendUpdates()){
         socket->send(encodeAction(DataRecievedEvent::ACTION_UNDO));
     }
 

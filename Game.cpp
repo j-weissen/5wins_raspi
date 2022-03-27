@@ -1,4 +1,4 @@
-#include "game.h"
+#include "Game.h"
 #include <iostream>
 
 Game::Game(symbol startPlayer, playerType typePlayerX, playerType typePlayerO, QLabel *message, QGraphicsScene *scene) {
@@ -75,6 +75,7 @@ void Game::inputAI() {
 bool Game::undo(){
     if (field->undo()){
         switchCurrPlayer();
+        message->setText(currPlayer->getOutput());
         return true;
     }
     return false;
