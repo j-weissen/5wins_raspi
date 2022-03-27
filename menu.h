@@ -41,6 +41,6 @@ private:
     void startGame();
 
 private slots:
-    void initNetwork();
+    void resetMenu();
 };
 #endif // MENU_H

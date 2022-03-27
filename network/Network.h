@@ -18,7 +18,7 @@ public:
 
     bool setPort(quint16 port);
 
-    void close();
+    virtual void close();
 
 protected:
     QTcpSocket *socket = nullptr;

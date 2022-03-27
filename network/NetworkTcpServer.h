@@ -12,6 +12,7 @@ public:
 
     QString startListening();
     bool isListening();
+    void close() override;
 
 protected:
     QTcpServer *server = nullptr;

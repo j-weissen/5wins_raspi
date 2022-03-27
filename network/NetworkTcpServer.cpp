@@ -24,6 +24,11 @@ void NetworkTcpServer::acceptConnection() {
     server->close();
 }
 
+void NetworkTcpServer::close() {
+    if (socket != nullptr) Network::close();
+    server->close();
+}
+
 NetworkTcpServer::~NetworkTcpServer() {
     delete server;
 }

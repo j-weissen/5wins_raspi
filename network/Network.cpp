@@ -3,6 +3,7 @@ using namespace std;
 #include <QTimer>
 
 Network::Network(QString separator) {
+    socket = nullptr;
     this->separator = separator.toUtf8().toBase64();
     incomingData.clear();
 }

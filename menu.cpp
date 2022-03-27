@@ -34,8 +34,8 @@ menu::menu(fiveWins *gameWidget, QWidget *parent)
     this->gameWidget = gameWidget;
     this->gameWidget->setMenu(this);
 
-    connect(gameWidget, &fiveWins::resetSockets, this, &menu::initNetwork);
-    initNetwork();
+    connect(gameWidget, &fiveWins::resetSockets, this, &menu::resetMenu);
+    resetMenu();
 }
 
 menu::~menu()
@@ -45,7 +45,7 @@ menu::~menu()
     delete client;
 }
 
-void menu::initNetwork() {
+void menu::resetMenu() {
     server = new NetworkTcpServer(fiveWins::messageSeparator);
     client = new NetworkTcpClient(fiveWins::messageSeparator);
 
@@ -53,6 +53,10 @@ void menu::initNetwork() {
     QObject::connect(server, &NetworkTcpServer::connected, this, &menu::onConnected);
 
     ui->label_serverIp->clear();
+    ui->label_serverIp->hide();
+    ui->lineEdit_ip->hide();
+    ui->pushButton_createServer->show();
+    ui->pushButton_joinServer->show();
 }
 
 void menu::on_pushButton_exit_clicked()
@@ -87,6 +91,10 @@ void menu::on_pushButton_createServer_clicked() {
         ui->label_serverIp->setText(address);
 
         gameWidget->setSocket(server);
+    } else {
+        server->close();
+        ui->label_serverIp->hide();
+        ui->pushButton_joinServer->show();
     }
 }
 
