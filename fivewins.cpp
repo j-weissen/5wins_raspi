@@ -121,6 +121,8 @@ bool fiveWins::eventFilter(QObject *watched, QEvent *event)
                 reset();
             } else if (dre->getAction() == DataRecievedEvent::ACTION_EXIT) {
                 exit();
+            } else if (dre->getAction() == DataRecievedEvent::ACTION_UNDO){
+                undo();
             } else {
                 qDebug() << "Error: dre.action = " << dre->getAction();
             }
@@ -281,3 +283,15 @@ void fiveWins::setIsServer(bool isServer) {
     this->isServer = isServer;
 }
 
+
+void fiveWins::on_pushButton_undo_clicked()
+{
+    undo();
+}
+
+void fiveWins::undo(){
+    if (sendUpdates()){
+        socket->send(encodeAction(DataRecievedEvent::ACTION_UNDO));
+    }
+    game->undo();
+}

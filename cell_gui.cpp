@@ -25,11 +25,7 @@ void CellGUI::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     QRectF rec = boundingRect();
     QColor colors[2] = {Qt::green, QColor(255,20,147)};
 
-    if(color == Qt::transparent && pressed){
-        color = colors[curr%2];
-        curr++;
-    }
-    QBrush brush = (pressed) ? color : (Qt::transparent);
+    QBrush brush = (state == SYMBOL_FREE) ? (Qt::white) : (state == SYMBOL_X)? colors[0] : colors[1];
     painter->fillRect(rec, brush);
     painter->drawRect(rec);
 
@@ -38,10 +34,7 @@ void CellGUI::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 
 void CellGUI::clicked()
 {
-    if(!pressed){
-        pressed = true;
-        update();
-    }
+    update();
 }
 
 int CellGUI::getSize()

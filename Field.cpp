@@ -213,3 +213,11 @@ void Field::setPrevCell(CellGUI *cell)
     previouslyChanged = cell;
 }
 
+bool Field::undo(){
+    if (previouslyChanged->state != SYMBOL_FREE){
+        previouslyChanged->state = SYMBOL_FREE;
+        previouslyChanged->update();
+        return true;
+    }
+    return false;
+}

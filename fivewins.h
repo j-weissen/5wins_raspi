@@ -46,6 +46,8 @@ private slots:
 
     void onDataRecieved();
 
+    void on_pushButton_undo_clicked();
+
 private:
     int playedGames;
     Ui::fiveWins *ui;
@@ -61,6 +63,7 @@ private:
     DataRecievedEvent* decodeDataToEvent(QString data);
     void exit();
     void reset();
+    void undo();
     bool sendUpdates();
 
 signals:

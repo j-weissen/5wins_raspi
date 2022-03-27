@@ -25,7 +25,7 @@ public:
     bool checkWin();
     bool checkTie();
     void print();
-
+    bool undo();
     void setPrevCell(CellGUI* cell);
 
 

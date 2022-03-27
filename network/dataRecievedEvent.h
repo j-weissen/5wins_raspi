@@ -13,6 +13,7 @@ public:
     static constexpr int ACTION_TURN = 0;
     static constexpr int ACTION_RESET = 1;
     static constexpr int ACTION_EXIT = 2;
+    static constexpr int ACTION_UNDO = 3;
 
     int getX();
     int getY();

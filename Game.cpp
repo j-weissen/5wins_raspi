@@ -71,3 +71,10 @@ bool Game::getTie()
 void Game::inputAI() {
 
 }
+
+void Game::undo(){
+    if (field->undo()){
+        switchCurrPlayer();
+    }
+
+}
