@@ -72,9 +72,10 @@ void Game::inputAI() {
 
 }
 
-void Game::undo(){
+bool Game::undo(){
     if (field->undo()){
         switchCurrPlayer();
+        return true;
     }
-
+    return false;
 }

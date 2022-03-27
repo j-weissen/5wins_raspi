@@ -290,8 +290,8 @@ void fiveWins::on_pushButton_undo_clicked()
 }
 
 void fiveWins::undo(){
-    if (sendUpdates()){
+    if (sendUpdates() && game->undo()){
         socket->send(encodeAction(DataRecievedEvent::ACTION_UNDO));
     }
-    game->undo();
+
 }
