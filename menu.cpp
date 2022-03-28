@@ -52,9 +52,9 @@ void menu::resetMenu() {
     QObject::connect(client, &NetworkTcpClient::connected, this, &menu::onConnected);
     QObject::connect(server, &NetworkTcpServer::connected, this, &menu::onConnected);
 
-    ui->label_serverIp->clear();
     ui->label_serverIp->hide();
     ui->lineEdit_ip->hide();
+    ui->lineEdit_ip->clear();
     ui->pushButton_createServer->show();
     ui->pushButton_joinServer->show();
 }

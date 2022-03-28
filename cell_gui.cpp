@@ -20,8 +20,7 @@ QRectF CellGUI::boundingRect() const
 }
 
 void CellGUI::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
-
+{    
     QRectF rec = boundingRect();
     QColor colors[2] = {Qt::green, QColor(255,20,147)};
 

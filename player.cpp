@@ -12,8 +12,12 @@ char Player::toChar() const {
 
 QString Player::getOutput()
 {
-    QString out = "Spieler ";
-    out.append(toChar());
+    QString out = "";
+    if (toChar() == 'X'){
+        out.append("Grün");
+    }else {
+        out.append("Pink");
+    }
     out += " ist am Zug.";
 
     return out;

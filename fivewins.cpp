@@ -1,6 +1,6 @@
 #include "fivewins.h"
 #include "ui_fivewins.h"
-#include "game.h"
+#include "Game.h"
 #include <QEvent>
 #include <QMouseEvent>
 #include <iostream>
@@ -235,7 +235,6 @@ void fiveWins::exit() {
     if (socket != nullptr) {
         socket->close();
     }
-    socket = nullptr;
     emit resetSockets();
     this->close();
     m->show();
