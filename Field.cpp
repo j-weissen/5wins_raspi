@@ -3,6 +3,7 @@
 
 Field::Field(QGraphicsScene *scene) {
     this->scene = scene;
+    previouslyChanged = nullptr;
     init_Area();
 }
 
@@ -214,7 +215,7 @@ void Field::setPrevCell(CellGUI *cell)
 }
 
 bool Field::undo(){
-    if (previouslyChanged->state != SYMBOL_FREE){
+    if (previouslyChanged != nullptr && previouslyChanged->state != SYMBOL_FREE){
         previouslyChanged->state = SYMBOL_FREE;
         previouslyChanged->update();
         return true;
