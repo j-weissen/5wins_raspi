@@ -1,4 +1,4 @@
-#include "cell.h"
+#include "Cell.h"
 
     void Cell::display() const {
         char c;

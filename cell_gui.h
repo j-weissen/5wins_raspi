@@ -5,7 +5,7 @@
 #include <QGraphicsItem>
 #include <QMouseEvent>
 #include <QtDebug>
-#include "cell.h"
+#include "Cell.h"
 
 class CellGUI : public QGraphicsItem, public Cell, public QObject
 {

@@ -1,4 +1,4 @@
-#include "field.h"
+#include "Field.h"
 #include <iostream>
 
 Field::Field(QGraphicsScene *scene) {
