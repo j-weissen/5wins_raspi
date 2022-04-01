@@ -1,6 +1,6 @@
 #include "fivewins.h"
 #include "ui_fivewins.h"
-#include "Game.h"
+#include "game.h"
 #include <QEvent>
 #include <QMouseEvent>
 #include <iostream>
@@ -20,23 +20,11 @@ fiveWins::fiveWins(QWidget *parent)
 
     ui->setupUi(this);
     ui->pushButton_reset->hide();
-    setupGui();
 
     scene = new QGraphicsScene(this);
+    setupGui();
 
     playedGames = 0;
-
-    QFont font;
-    font.setBold(true);
-    font.setPixelSize(60);
-
-
-    io = new QGraphicsTextItem;
-    io->setDefaultTextColor(Qt::blue);
-    io->setPos(0, 0);
-    io->setFont(font);
-
-    scene->addItem(io);
 
     ui->graphicsView->setScene(scene);
 
@@ -92,7 +80,21 @@ void fiveWins::setupGui() {
     ui->pushButton_undo->setStyleSheet(cssGreen);
     ui->pushButton_reset->setStyleSheet(cssGreen);
 
-    CellGUI::setSize(maxSize/15);
+    int cellSize = maxSize/15;
+    CellGUI::setSize(cellSize);
+
+    QFont font;
+    font.setBold(true);
+    font.setPixelSize(cellSize);
+
+
+    io = new QGraphicsTextItem;
+    io->setDefaultTextColor(Qt::blue);
+    io->setPos(1.5*cellSize, cellSize);
+    io->setFont(font);
+
+    scene->addItem(io);
+
 }
 
 fiveWins::~fiveWins()
