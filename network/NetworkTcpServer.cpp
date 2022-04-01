@@ -10,7 +10,13 @@ NetworkTcpServer::NetworkTcpServer(QString separator) : Network(separator) {
 
 QString NetworkTcpServer::startListening() {
     server->listen(QHostAddress::Any, PORT);
-    return server->serverAddress().toString() + ":" + QString::number(server->serverPort());
+
+    QTcpSocket socket;
+    socket.connectToHost("8.8.8.8", 53); // google DNS, or something else reliable
+
+    socket.waitForConnected();
+
+    return socket.localAddress().toString() + ":" + QString::number(server->serverPort());
 }
 
 bool NetworkTcpServer::isListening() {
