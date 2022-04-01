@@ -1,4 +1,4 @@
-#include "cell_gui.h"
+#include "Cell_gui.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QString>
 #include <QCoreApplication>

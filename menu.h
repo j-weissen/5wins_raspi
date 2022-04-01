@@ -2,7 +2,7 @@
 #define MENU_H
 
 #include <QWidget>
-#include "fivewins.h"
+#include "Fivewins.h"
 #include "network/Network.h"
 #include "network/NetworkTcpClient.h"
 #include "network/NetworkTcpServer.h"

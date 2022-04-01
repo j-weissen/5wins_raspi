@@ -85,8 +85,8 @@ void fiveWins::setupGui() {
     maxSize = std::min(height1, width1);
     ui->graphicsView->setFixedHeight(maxSize);
     ui->graphicsView->setFixedWidth(maxSize);
-    QString cssGreen = "QPushButton { background-color: rgb(89,201,38); border-style: double; border-width: 10px; border-radius: 10px; border-color: rgb(38,201,69); font: bold; min-width: 10em; } QPushButton:hover {border-color: rgb(38,131,69)}";
-    QString cssRed = "QPushButton { background-color: rgb(201,44,44); border-style: double; border-width: 10px; border-radius: 10px; border-color: rgb(180,44,44); font: bold; min-width: 10em; } QPushButton:hover {border-color: rgb(100,44,44)}";
+    QString cssGreen = "QPushButton { background-color: rgb(89,201,38); border-style: double; border-width: 10px; border-radius: 10px; border-color: rgb(38,201,69); font: bold; } QPushButton:hover {border-color: rgb(38,131,69)}";
+    QString cssRed = "QPushButton { background-color: rgb(201,44,44); border-style: double; border-width: 10px; border-radius: 10px; border-color: rgb(180,44,44); font: bold; } QPushButton:hover {border-color: rgb(100,44,44)}";
 
     ui->pushButton_exit_menu->setStyleSheet(cssRed);
     ui->pushButton_undo->setStyleSheet(cssGreen);
@@ -129,7 +129,7 @@ bool fiveWins::eventFilter(QObject *watched, QEvent *event)
         }
 
         if (game != nullptr && !game->getWin() && !game->getTie()){
-            if (game->currPlayer->type == TYPE_HUMAN && !this->isHidden() && this->isActiveWindow() && event->type() == QEvent::MouseButtonPress && std::strcmp(watched->metaObject()->className(), "fiveWins") == 0) {
+            if (game->currPlayer->type == TYPE_HUMAN && !this->isHidden() && this->isActiveWindow() && event->type() == QEvent::MouseButtonPress && strcmp(watched->metaObject()->className(), "fiveWins") == 0) {
                 QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
 
                 if (mouseEvent->button() == Qt::LeftButton) {

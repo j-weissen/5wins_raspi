@@ -1,8 +1,8 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "field.h"
-#include "player.h"
+#include "Field.h"
+#include "Player.h"
 #include <QLabel>
 
 class Game {

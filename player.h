@@ -1,7 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "cell.h"
+#include "Cell.h"
 #include <QString>
 
 enum playerType {

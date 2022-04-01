@@ -1,7 +1,7 @@
 #ifndef FIELD_H
 #define FIELD_H
 
-#include "cell_gui.h"
+#include "Cell_gui.h"
 #include <QGraphicsScene>
 
 class Field {

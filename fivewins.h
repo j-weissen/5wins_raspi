@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QGraphicsScene>
-#include "game.h"
+#include "Game.h"
 #include "network/Network.h"
 #include "network/dataRecievedEvent.h"
 

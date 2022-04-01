@@ -1,5 +1,5 @@
 #include "fivewins.h"
-#include "menu.h"
+#include "Menu.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
