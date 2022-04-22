@@ -15,7 +15,9 @@ Verwendet wurde QtCreator 6.0.2
 Um das Programm zu starten ist es am einfachsten 
 [Qt-Creator 6 zu installieren](https://www.qt.io/download), 
 danach das Repo zu clonen
-```git clone https://github.com/j-weissen/5wins_raspi -b QTGui```
+```
+git clone https://github.com/j-weissen/5wins_raspi -b QTGui
+```
 und in der IDE zu öffnen.
 
 ## Probleme
