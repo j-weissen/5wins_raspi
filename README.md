@@ -6,7 +6,7 @@ https://trello.com/b/tEX1zA8r
 
 Die finale Version des Projektes liegt vorerst im Branch "QTGui"
 
-Ziel des Projektes war es, eine simple Version des Spieles "5 gewinnt" in C++ inkl. GUI mithilfe des Qt-Frameworks zu implementieren, welche auch über das Netzwerk spielbar ist, sowie auch auf einem Raspberry Pi mit Touch-Display spielbar ist.
+Ziel des Projektes war es, eine simple Version des Spieles "5 gewinnt" in C++ inkl. GUI mithilfe des Qt-Frameworks zu implementieren, welche auch über das Netzwerk, sowie auch auf einem Raspberry Pi mit Touch-Display spielbar ist.
 
 Verwendet wurde QtCreator 6.0.2
 
